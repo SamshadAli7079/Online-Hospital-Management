@@ -1159,7 +1159,7 @@ async function updateAppointment(
 
         const response =
             await fetch(
-                `http://localhost:5000/api/admin/appointments/${appointmentId}`,
+                `http://localhost:5000/api/appointments/${appointmentId}/status`,
                 {
                     method: "PATCH",
 

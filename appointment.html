@@ -571,84 +571,35 @@
 
 
     <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // =====================================================
+// API CONFIGURATION
+// =====================================================
 
-    <script>
-        // ===============================
-// LOAD DOCTORS FROM MONGODB
-// ===============================
+const API_BASE_URL = "https://hospital-management-api-2fqs.onrender.com";
 
-async function loadDoctors() {
 
-    const doctorSelect =
-        document.getElementById("doctor");
-
-    try {
-
-        const response = await fetch(
-            "http://localhost:5000/api/doctors"
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.message || "Unable to load doctors"
-            );
-
-        }
-
-        doctorSelect.innerHTML = `
-            <option value="">
-                -- Select Doctor --
-            </option>
-        `;
-
-        data.doctors.forEach(function(doctor) {
-
-            const option =
-                document.createElement("option");
-
-            option.value = doctor._id;
-
-            option.textContent =
-                `${doctor.name} - ${doctor.specialization}`;
-
-            doctorSelect.appendChild(option);
-
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Doctor loading error:",
-            error
-        );
-
-        doctorSelect.innerHTML = `
-            <option value="">
-                Unable to load doctors
-            </option>
-        `;
-
-    }
-}
-
-// ===============================
-// LOAD DOCTORS FROM MONGODB
-// ===============================
+// =====================================================
+// DOCTOR DATA
+// =====================================================
 
 let allDoctors = [];
 
+
+// =====================================================
+// LOAD DOCTORS FROM RENDER BACKEND
+// =====================================================
+
 async function loadDoctors() {
 
-    const doctorSelect =
-        document.getElementById("doctor");
+    const doctorSelect = document.getElementById("doctor");
+
+    if (!doctorSelect) return;
 
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/doctors"
+            `${API_BASE_URL}/api/doctors`
         );
 
         const data = await response.json();
@@ -659,13 +610,18 @@ async function loadDoctors() {
             );
         }
 
-        allDoctors = data.doctors;
+        allDoctors = data.doctors || [];
 
         doctorSelect.innerHTML = `
             <option value="">
                 -- Select Doctor --
             </option>
         `;
+
+        console.log(
+            "Doctors loaded successfully:",
+            allDoctors
+        );
 
     } catch (error) {
 
@@ -683,16 +639,16 @@ async function loadDoctors() {
 }
 
 
-// ===============================
+// =====================================================
 // FILTER DOCTORS BY DEPARTMENT
-// ===============================
+// =====================================================
 
 document
     .getElementById("department")
     .addEventListener("change", function () {
 
         const selectedDepartment =
-            this.value.toLowerCase();
+            this.value.trim().toLowerCase();
 
         const doctorSelect =
             document.getElementById("doctor");
@@ -710,8 +666,11 @@ document
         const filteredDoctors =
             allDoctors.filter(function (doctor) {
 
-                return doctor.department.toLowerCase()
-                    === selectedDepartment;
+                return (
+                    doctor.department &&
+                    doctor.department.trim().toLowerCase() ===
+                    selectedDepartment
+                );
 
             });
 
@@ -743,16 +702,16 @@ document
     });
 
 
-// ===============================
+// =====================================================
 // LOAD DOCTORS WHEN PAGE OPENS
-// ===============================
+// =====================================================
 
 loadDoctors();
 
 
-// ===============================
-// YOUR EXISTING APPOINTMENT CODE
-// ===============================
+// =====================================================
+// APPOINTMENT FORM
+// =====================================================
 
 const form =
     document.getElementById("appointmentForm");
@@ -767,14 +726,19 @@ form.addEventListener(
 
         event.preventDefault();
 
-        // ===============================
+
+        // =================================================
         // CHECK PATIENT LOGIN
-        // ===============================
+        // =================================================
 
-        const patientData =
-            localStorage.getItem("patient");
+        const patientId =
+            localStorage.getItem("patientId");
 
-        if (!patientData) {
+        const storedPatientName =
+            localStorage.getItem("patientName");
+
+
+        if (!patientId) {
 
             alert("Please login first.");
 
@@ -784,13 +748,10 @@ form.addEventListener(
             return;
         }
 
-        const patient =
-            JSON.parse(patientData);
 
-
-        // ===============================
+        // =================================================
         // GET FORM VALUES
-        // ===============================
+        // =================================================
 
         const patientName =
             document
@@ -842,15 +803,36 @@ form.addEventListener(
                 .trim();
 
 
-        // ===============================
-        // SEND DATA TO BACKEND
-        // ===============================
+        // =================================================
+        // VALIDATION
+        // =================================================
+
+        if (
+            !patientName ||
+            !phone ||
+            !email ||
+            !age ||
+            !department ||
+            !doctor ||
+            !date ||
+            !time
+        ) {
+
+            alert("Please fill all required fields.");
+
+            return;
+        }
+
+
+        // =================================================
+        // SEND APPOINTMENT TO RENDER BACKEND
+        // =================================================
 
         try {
 
             const response =
                 await fetch(
-                    "http://localhost:5000/api/appointments",
+                    `${API_BASE_URL}/api/appointments`,
                     {
 
                         method: "POST",
@@ -863,10 +845,11 @@ form.addEventListener(
                         body: JSON.stringify({
 
                             patientId:
-                                patient.id,
+                                patientId,
 
                             patientName:
-                                patientName,
+                                patientName ||
+                                storedPatientName,
 
                             phone:
                                 phone,
@@ -875,7 +858,7 @@ form.addEventListener(
                                 email,
 
                             age:
-                                age,
+                                parseInt(age),
 
                             department:
                                 department,
@@ -912,18 +895,22 @@ form.addEventListener(
 
                 form.reset();
 
+                // Reload doctor data after form reset
+                loadDoctors();
+
             } else {
 
                 alert(
                     data.message ||
                     "Appointment booking failed!"
                 );
+
             }
 
 
         } catch (error) {
 
-            console.log(
+            console.error(
                 "Appointment Error:",
                 error
             );
@@ -936,8 +923,8 @@ form.addEventListener(
 
     }
 );
+  </script>
 
-    </script>
 
 </body>
 

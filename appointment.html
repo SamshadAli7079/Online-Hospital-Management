@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Appointment - MediCare Hospital</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f9fc;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #0b7285;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 7%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #d9faff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #d9faff;
+        }
+
+        /* ================= APPOINTMENT ================= */
+
+        .appointment-section {
+            padding: 65px 7%;
+            min-height: 80vh;
+        }
+
+        .appointment-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .appointment-title h1 {
+            color: #075e6e;
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .appointment-title p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .appointment-container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.09);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccd6da;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #0b7285;
+            box-shadow: 0 0 0 2px rgba(11,114,133,0.1);
+        }
+
+        .form-group textarea {
+            height: 110px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #0b7285;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #075e6e;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f8ed;
+            color: #16803a;
+            border-radius: 7px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #063f4a;
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        footer h3 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            color: #d7eef1;
+            margin: 6px 0;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .appointment-container {
+                padding: 25px 20px;
+            }
+
+            .appointment-section {
+                padding: 50px 5%;
+            }
+
+            .appointment-title h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 MediCare <span>Hospital</span>
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="doctors.html">
+                    Doctors
+                </a>
+            </li>
+
+            <li>
+                <a href="appointment.html">
+                    Appointment
+                </a>
+            </li>
+
+            <li>
+                <a href="login.html">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="register.html">
+                    Register
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= APPOINTMENT SECTION ================= -->
+
+    <section class="appointment-section">
+
+        <div class="appointment-title">
+
+            <h1>
+                📅 Book Your Appointment
+            </h1>
+
+            <p>
+                Fill in the details below to schedule your appointment.
+            </p>
+
+        </div>
+
+
+        <div class="appointment-container">
+
+            <form id="appointmentForm">
+
+
+                <!-- NAME & PHONE -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="patientName">
+                            Patient Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="patientName"
+                            placeholder="Enter patient name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="Enter 10 digit mobile number"
+                            pattern="[0-9]{10}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL & AGE -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter email address"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            Patient Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            min="1"
+                            max="120"
+                            placeholder="Enter age"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DEPARTMENT & DOCTOR -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Select Department
+                        </label>
+
+                        <select id="department" required>
+
+                            <option value="">
+                                -- Select Department --
+                            </option>
+
+                            <option value="cardiology">
+                                Cardiology
+                            </option>
+
+                            <option value="neurology">
+                                Neurology
+                            </option>
+
+                            <option value="orthopedics">
+                                Orthopedics
+                            </option>
+
+                            <option value="dermatology">
+                                Dermatology
+                            </option>
+
+                            <option value="pediatrics">
+                                Pediatrics
+                            </option>
+
+                            <option value="gynecology">
+                                Gynecology
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="doctor">
+                            Select Doctor
+                        </label>
+
+<select id="doctor" required>
+
+    <option value="">
+        -- Select Doctor --
+    </option>
+
+</select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE & TIME -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="date">
+                            Appointment Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="time">
+                            Appointment Time
+                        </label>
+
+                        <select id="time" required>
+
+                            <option value="">
+                                -- Select Time --
+                            </option>
+
+                            <option value="09:00 AM">
+                                09:00 AM
+                            </option>
+
+                            <option value="10:00 AM">
+                                10:00 AM
+                            </option>
+
+                            <option value="11:00 AM">
+                                11:00 AM
+                            </option>
+
+                            <option value="12:00 PM">
+                                12:00 PM
+                            </option>
+
+                            <option value="02:00 PM">
+                                02:00 PM
+                            </option>
+
+                            <option value="03:00 PM">
+                                03:00 PM
+                            </option>
+
+                            <option value="04:00 PM">
+                                04:00 PM
+                            </option>
+
+                            <option value="05:00 PM">
+                                05:00 PM
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROBLEM -->
+
+                <div class="form-group">
+
+                    <label for="problem">
+                        Reason / Health Problem
+                    </label>
+
+                    <textarea
+                        id="problem"
+                        placeholder="Briefly describe your problem..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+
+                    📅 Book Appointment
+
+                </button>
+
+
+                <!-- SUCCESS -->
+
+                <div
+                    id="successMessage"
+                    class="success-message"
+                >
+
+                    ✅ Appointment booked successfully!
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3>
+            🏥 MediCare Hospital
+        </h3>
+
+        <p>
+            Online Hospital Management System
+        </p>
+
+        <p>
+            © 2026 MediCare Hospital. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+        // ===============================
+// LOAD DOCTORS FROM MONGODB
+// ===============================
+
+async function loadDoctors() {
+
+    const doctorSelect =
+        document.getElementById("doctor");
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/doctors"
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to load doctors"
+            );
+
+        }
+
+        doctorSelect.innerHTML = `
+            <option value="">
+                -- Select Doctor --
+            </option>
+        `;
+
+        data.doctors.forEach(function(doctor) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = doctor._id;
+
+            option.textContent =
+                `${doctor.name} - ${doctor.specialization}`;
+
+            doctorSelect.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Doctor loading error:",
+            error
+        );
+
+        doctorSelect.innerHTML = `
+            <option value="">
+                Unable to load doctors
+            </option>
+        `;
+
+    }
+}
+
+// ===============================
+// LOAD DOCTORS FROM MONGODB
+// ===============================
+
+let allDoctors = [];
+
+async function loadDoctors() {
+
+    const doctorSelect =
+        document.getElementById("doctor");
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/doctors"
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to load doctors"
+            );
+        }
+
+        allDoctors = data.doctors;
+
+        doctorSelect.innerHTML = `
+            <option value="">
+                -- Select Doctor --
+            </option>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Doctor loading error:",
+            error
+        );
+
+        doctorSelect.innerHTML = `
+            <option value="">
+                Unable to load doctors
+            </option>
+        `;
+    }
+}
+
+
+// ===============================
+// FILTER DOCTORS BY DEPARTMENT
+// ===============================
+
+document
+    .getElementById("department")
+    .addEventListener("change", function () {
+
+        const selectedDepartment =
+            this.value.toLowerCase();
+
+        const doctorSelect =
+            document.getElementById("doctor");
+
+        doctorSelect.innerHTML = `
+            <option value="">
+                -- Select Doctor --
+            </option>
+        `;
+
+        if (!selectedDepartment) {
+            return;
+        }
+
+        const filteredDoctors =
+            allDoctors.filter(function (doctor) {
+
+                return doctor.department.toLowerCase()
+                    === selectedDepartment;
+
+            });
+
+
+        filteredDoctors.forEach(function (doctor) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = doctor._id;
+
+            option.textContent =
+                `${doctor.name} - ${doctor.specialization}`;
+
+            doctorSelect.appendChild(option);
+
+        });
+
+
+        if (filteredDoctors.length === 0) {
+
+            doctorSelect.innerHTML = `
+                <option value="">
+                    No doctor available
+                </option>
+            `;
+        }
+
+    });
+
+
+// ===============================
+// LOAD DOCTORS WHEN PAGE OPENS
+// ===============================
+
+loadDoctors();
+
+
+// ===============================
+// YOUR EXISTING APPOINTMENT CODE
+// ===============================
+
+const form =
+    document.getElementById("appointmentForm");
+
+const successMessage =
+    document.getElementById("successMessage");
+
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        // ===============================
+        // CHECK PATIENT LOGIN
+        // ===============================
+
+        const patientData =
+            localStorage.getItem("patient");
+
+        if (!patientData) {
+
+            alert("Please login first.");
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+        const patient =
+            JSON.parse(patientData);
+
+
+        // ===============================
+        // GET FORM VALUES
+        // ===============================
+
+        const patientName =
+            document
+                .getElementById("patientName")
+                .value
+                .trim();
+
+        const phone =
+            document
+                .getElementById("phone")
+                .value
+                .trim();
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+        const age =
+            document
+                .getElementById("age")
+                .value;
+
+        const department =
+            document
+                .getElementById("department")
+                .value;
+
+        const doctor =
+            document
+                .getElementById("doctor")
+                .value;
+
+        const date =
+            document
+                .getElementById("date")
+                .value;
+
+        const time =
+            document
+                .getElementById("time")
+                .value;
+
+        const problem =
+            document
+                .getElementById("problem")
+                .value
+                .trim();
+
+
+        // ===============================
+        // SEND DATA TO BACKEND
+        // ===============================
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://localhost:5000/api/appointments",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            patientId:
+                                patient.id,
+
+                            patientName:
+                                patientName,
+
+                            phone:
+                                phone,
+
+                            email:
+                                email,
+
+                            age:
+                                age,
+
+                            department:
+                                department,
+
+                            doctor:
+                                doctor,
+
+                            date:
+                                date,
+
+                            time:
+                                time,
+
+                            problem:
+                                problem
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (response.ok) {
+
+                successMessage.textContent =
+                    "✅ Appointment booked successfully!";
+
+                successMessage.style.display =
+                    "block";
+
+                form.reset();
+
+            } else {
+
+                alert(
+                    data.message ||
+                    "Appointment booking failed!"
+                );
+            }
+
+
+        } catch (error) {
+
+            console.log(
+                "Appointment Error:",
+                error
+            );
+
+            alert(
+                "Backend server se connection nahi ho raha hai."
+            );
+
+        }
+
+    }
+);
+
+    </script>
+
+</body>
+
+</html>
+

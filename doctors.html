@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Our Doctors | MediCare Hospital</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #f5f9fc;
+        color: #222;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+        background: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 7%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+        color: #075e6e;
+        font-size: 25px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .logo span {
+        color: #0b7285;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+        color: #0b7285;
+    }
+
+    .nav-register {
+        background: #0b7285;
+        color: white !important;
+        padding: 10px 16px;
+        border-radius: 6px;
+    }
+
+    /* ================= PAGE HEADER ================= */
+
+    .page-header {
+        background: linear-gradient(135deg, #e8faff, #ffffff);
+        text-align: center;
+        padding: 65px 20px;
+    }
+
+    .page-header .badge {
+        display: inline-block;
+        background: #dff7fa;
+        color: #087f8c;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .page-header h1 {
+        color: #075e6e;
+        font-size: 42px;
+        margin-bottom: 12px;
+    }
+
+    .page-header p {
+        color: #666;
+        max-width: 650px;
+        margin: auto;
+        line-height: 1.7;
+    }
+
+    /* ================= DOCTORS ================= */
+
+    .doctors-section {
+        padding: 70px 7%;
+    }
+
+    .doctor-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .doctor-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px 25px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        border: 1px solid #edf4f5;
+        transition: 0.3s;
+    }
+
+    .doctor-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+    }
+
+    /* ================= DOCTOR IMAGE ================= */
+
+    .doctor-image {
+        width: 110px;
+        height: 110px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: #e8faff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 58px;
+        border: 5px solid #f1fbfc;
+    }
+
+    .doctor-card h2 {
+        color: #075e6e;
+        font-size: 21px;
+        margin-bottom: 8px;
+    }
+
+    .specialization {
+        color: #0b7285;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .department {
+        display: inline-block;
+        background: #eef9fa;
+        color: #087f8c;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .experience {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .availability {
+        color: #16803a;
+        background: #e8f8ee;
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* ================= BUTTON ================= */
+
+    .doctor-btn {
+        display: block;
+        text-decoration: none;
+        background: #0b7285;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 7px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .doctor-btn:hover {
+        background: #075e6e;
+        transform: translateY(-2px);
+    }
+
+    /* ================= INFO SECTION ================= */
+
+    .doctor-info {
+        margin-top: 60px;
+        background: white;
+        padding: 35px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .doctor-info h2 {
+        color: #075e6e;
+        margin-bottom: 12px;
+    }
+
+    .doctor-info p {
+        color: #666;
+        line-height: 1.7;
+    }
+
+    /* ================= CTA ================= */
+
+    .cta {
+        background: linear-gradient(135deg, #075e6e, #0b8b9d);
+        color: white;
+        text-align: center;
+        padding: 65px 20px;
+    }
+
+    .cta h2 {
+        font-size: 34px;
+        margin-bottom: 12px;
+    }
+
+    .cta p {
+        margin-bottom: 25px;
+    }
+
+    .cta a {
+        display: inline-block;
+        background: white;
+        color: #0b7285;
+        padding: 13px 24px;
+        border-radius: 7px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        background: #063f4a;
+        color: white;
+        padding: 45px 7% 25px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 40px;
+    }
+
+    footer h3 {
+        margin-bottom: 15px;
+    }
+
+    footer p,
+    footer a {
+        color: #d7eef1;
+        line-height: 1.9;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    footer a:hover {
+        color: white;
+    }
+
+    .copyright {
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin-top: 30px;
+        padding-top: 20px;
+        color: #c5e1e5;
+        font-size: 14px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1000px) {
+
+        .doctor-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 900px) {
+
+        nav {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+    }
+
+    @media (max-width: 600px) {
+
+        .page-header h1 {
+            font-size: 32px;
+        }
+
+        .doctors-section {
+            padding: 50px 5%;
+        }
+
+        .doctor-container {
+            grid-template-columns: 1fr;
+        }
+
+        nav ul {
+            gap: 10px 15px;
+        }
+
+        nav ul li a {
+            font-size: 12px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        🏥 MediCare <span>Hospital</span>
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="index.html">Home</a>
+        </li>
+
+        <li>
+            <a href="doctors.html">Doctors</a>
+        </li>
+
+        <li>
+            <a href="appointment.html">Appointment</a>
+        </li>
+
+        <li>
+            <a href="login.html">Patient Login</a>
+        </li>
+
+        <li>
+            <a href="register.html" class="nav-register">
+                Register
+            </a>
+        </li>
+
+        <li>
+            <a href="doctor-login.html">Doctor Login</a>
+        </li>
+
+        <li>
+            <a href="admin-login.html">Admin Login</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- ================= PAGE HEADER ================= -->
+
+<section class="page-header">
+
+    <div class="badge">
+        👨‍⚕️ Our Medical Team
+    </div>
+
+    <h1>
+        Meet Our Doctors
+    </h1>
+
+    <p>
+        Our experienced and qualified medical professionals
+        are committed to providing quality healthcare services
+        to every patient.
+    </p>
+
+</section>
+
+
+<!-- ================= DOCTORS ================= -->
+
+<section class="doctors-section">
+
+<div class="doctor-container" id="doctorContainer">
+
+    <p style="text-align: center; grid-column: 1 / -1;">
+        Loading doctors...
+    </p>
+
+</div>
+
+
+
+    <!-- ================= INFO ================= -->
+
+    <div class="doctor-info">
+
+        <h2>
+            Need to Consult a Doctor?
+        </h2>
+
+        <p>
+            Choose a doctor according to your medical requirement
+            and book an appointment through our online system.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <h2>
+        Ready to Book Your Appointment?
+    </h2>
+
+    <p>
+        Select your preferred doctor and schedule your visit online.
+    </p>
+
+    <a href="appointment.html">
+        📅 Book Appointment
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-content">
+
+        <div>
+
+            <h3>
+                🏥 MediCare Hospital
+            </h3>
+
+            <p>
+                Quality healthcare services through
+                a convenient online hospital management system.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <p>
+                <a href="index.html">
+                    Home
+                </a>
+            </p>
+
+            <p>
+                <a href="doctors.html">
+                    Doctors
+                </a>
+            </p>
+
+            <p>
+                <a href="appointment.html">
+                    Appointment
+                </a>
+            </p>
+
+            <p>
+                <a href="login.html">
+                    Patient Login
+                </a>
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Contact Information
+            </h3>
+
+            <p>
+                📞 +91 98765 43210
+            </p>
+
+            <p>
+                📧 info@medicare.com
+            </p>
+
+            <p>
+                📍 Hyderabad, India
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 MediCare Hospital.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+<script>
+
+async function loadDoctors() {
+
+    const doctorContainer =
+        document.getElementById("doctorContainer");
+
+    try {
+
+        const response =
+            await fetch("http://localhost:5000/api/doctors");
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to load doctors"
+            );
+
+        }
+
+        const doctors = data.doctors;
+
+        if (!doctors || doctors.length === 0) {
+
+            doctorContainer.innerHTML = `
+                <p style="text-align:center; grid-column:1/-1;">
+                    No doctors available.
+                </p>
+            `;
+
+            return;
+        }
+
+        doctorContainer.innerHTML = "";
+
+        doctors.forEach(function(doctor) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "doctor-card";
+
+            const specialization =
+                (doctor.specialization || "").toLowerCase();
+
+            let doctorIcon = "👨‍⚕️";
+
+            if (
+                specialization.includes("gynec") ||
+                specialization.includes("dermat")
+            ) {
+                doctorIcon = "👩‍⚕️";
+            }
+
+            card.innerHTML = `
+
+                <div class="doctor-image">
+                    ${doctorIcon}
+                </div>
+
+                <h2>
+                    ${doctor.name}
+                </h2>
+
+                <p class="specialization">
+                    ${doctor.specialization}
+                </p>
+
+                <span class="department">
+                    ${doctor.department}
+                </span>
+
+                <p class="experience">
+                    🏆 ${doctor.experience || 0} Years Experience
+                </p>
+
+                <div class="availability">
+                    ● ${doctor.availability || "Available Today"}
+                </div>
+
+                <a
+                    href="appointment.html?doctor=${doctor._id}"
+                    class="doctor-btn">
+
+                    📅 Book Appointment
+
+                </a>
+
+            `;
+
+            doctorContainer.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Doctor loading error:",
+            error
+        );
+
+        doctorContainer.innerHTML = `
+
+            <p style="
+                text-align:center;
+                color:red;
+                grid-column:1/-1;
+            ">
+
+                Unable to load doctors from backend.
+
+            </p>
+
+        `;
+
+    }
+
+}
+
+loadDoctors();
+
+</script>
+
+</body>
+
+</html>

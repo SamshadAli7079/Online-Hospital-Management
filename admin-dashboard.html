@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | MediCare Hospital</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #222;
+        }
+
+        /* ================= HEADER ================= */
+
+        .admin-header {
+            background: linear-gradient(135deg, #075e6e, #0b7285);
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+
+        .admin-brand h1 {
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+
+        .admin-brand p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            border: none;
+            background: white;
+            color: #087f8c;
+            padding: 11px 20px;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #e9fbff;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .admin-container {
+            width: 86%;
+            max-width: 1450px;
+            margin: 35px auto;
+        }
+
+
+        /* ================= WELCOME ================= */
+
+        .welcome-box {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            margin-bottom: 28px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            border-left: 5px solid #0b7285;
+        }
+
+        .welcome-box h2 {
+            color: #075e6e;
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+
+        .welcome-box p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: #e9f9fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+        }
+
+        .stat-info h2 {
+            color: #075e6e;
+            font-size: 27px;
+            margin-bottom: 3px;
+        }
+
+        .stat-info p {
+            color: #777;
+            font-size: 14px;
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section-box {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .section-header h2 {
+            color: #075e6e;
+            font-size: 22px;
+        }
+
+        .refresh-btn {
+            background: #e9f9fb;
+            color: #087f8c;
+            border: 1px solid #bfe5e9;
+            padding: 9px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .refresh-btn:hover {
+            background: #087f8c;
+            color: white;
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e5e5;
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #f7fcfd;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .confirmed {
+            background: #dff6e7;
+            color: #16743a;
+        }
+
+        .cancelled {
+            background: #fde2e2;
+            color: #b42318;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .confirm-btn,
+        .cancel-btn {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 2px;
+        }
+
+        .confirm-btn {
+            background: #e7f8ed;
+            color: #16803a;
+        }
+
+        .confirm-btn:hover {
+            background: #198754;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #ffe7e7;
+            color: #c62828;
+        }
+
+        .cancel-btn:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+
+        /* ================= EMPTY / LOADING ================= */
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            padding: 25px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #063f4a;
+            color: white;
+            text-align: center;
+            padding: 32px 20px;
+            margin-top: 50px;
+        }
+
+        footer h3 {
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            color: #c9e3e7;
+            margin-top: 5px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .admin-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .admin-container {
+                width: 92%;
+                margin: 25px auto;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-box {
+                padding: 20px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="admin-header">
+
+        <div class="admin-brand">
+
+            <h1>
+                🏥 MediCare Hospital
+            </h1>
+
+            <p>
+                Administration Management Portal
+            </p>
+
+        </div>
+
+
+        <button
+            class="logout-btn"
+            id="logoutBtn">
+
+            🚪 Logout
+
+        </button>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="admin-container">
+
+
+        <!-- ================= WELCOME ================= -->
+
+        <section class="welcome-box">
+
+            <h2 id="welcomeAdmin">
+                Welcome, Admin 👋
+            </h2>
+
+            <p>
+                Manage patients, appointments and hospital
+                activities from your administration dashboard.
+            </p>
+
+        </section>
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <section class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div class="stat-info">
+
+                    <h2 id="totalPatients">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Patients
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📅
+                </div>
+
+                <div class="stat-info">
+
+                    <h2 id="totalAppointments">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Appointments
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🟡
+                </div>
+
+                <div class="stat-info">
+
+                    <h2 id="pendingAppointments">
+                        0
+                    </h2>
+
+                    <p>
+                        Pending Appointments
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✅
+                </div>
+
+                <div class="stat-info">
+
+                    <h2 id="confirmedAppointments">
+                        0
+                    </h2>
+
+                    <p>
+                        Confirmed Appointments
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================= APPOINTMENTS ================= -->
+
+        <section class="section-box">
+
+
+            <div class="section-header">
+
+                <h2>
+                    📅 All Appointments
+                </h2>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadAppointments()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Doctor
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="appointmentTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="empty-message">
+
+                                Loading appointments...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PATIENTS ================= -->
+
+        <section class="section-box">
+
+
+            <div class="section-header">
+
+                <h2>
+                    👥 Registered Patients
+                </h2>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadPatients()">
+
+                    🔄 Refresh
+
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Age
+                            </th>
+
+                            <th>
+                                Gender
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="patientTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty-message">
+
+                                Loading patients...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+<!-- ================= DOCTOR MANAGEMENT ================= -->
+
+<section class="section-box">
+
+    <div class="section-header">
+
+        <h2>
+            👨‍⚕️ Doctor Management
+        </h2>
+<button
+    class="confirm-btn"
+    onclick="openDoctorForm()">
+    ➕ Add Doctor
+</button>
+<div id="addDoctorForm" style="display:block; margin-top:20px; padding:20px; background:#f7fcfd; border-radius:10px;">
+
+    <h3>➕ Add New Doctor</h3>
+
+    <input type="text" id="doctorName" placeholder="Doctor Name">
+
+    <input type="email" id="doctorEmail" placeholder="Email">
+
+    <input type="text" id="doctorPhone" placeholder="Phone">
+
+    <input type="password" id="doctorPassword" placeholder="Password">
+
+    <input type="text" id="doctorDepartment" placeholder="Department">
+
+    <input type="text" id="doctorSpecialization" placeholder="Specialization">
+
+    <input type="number" id="doctorExperience" placeholder="Experience">
+
+    <br><br>
+
+<button
+    type="button"
+    class="confirm-btn"
+    onclick="addDoctor()">
+    ✅ Save Doctor
+</button>
+
+</div>
+<div id="addDoctorForm" style="display:none; margin-top:20px; padding:20px; background:#f7fcfd; border-radius:10px;">
+
+    <h3 style="color:#075e6e; margin-bottom:15px;">
+        ➕ Add New Doctor
+    </h3>
+
+    <input
+        type="text"
+        id="doctorName"
+        placeholder="Doctor Name"
+        required
+        style="padding:10px; margin:5px;">
+
+    <input
+        type="email"
+        id="doctorEmail"
+        placeholder="Email"
+        required
+        style="padding:10px; margin:5px;">
+
+    <input
+        type="text"
+        id="doctorPhone"
+        placeholder="Phone"
+        required
+        style="padding:10px; margin:5px;">
+
+    <input
+        type="password"
+        id="doctorPassword"
+        placeholder="Password"
+        required
+        style="padding:10px; margin:5px;">
+
+    <input
+        type="text"
+        id="doctorDepartment"
+        placeholder="Department"
+        required
+        style="padding:10px; margin:5px;">
+
+    <input
+        type="text"
+        id="doctorSpecialization"
+        placeholder="Specialization"
+        required
+        style="padding:10px; margin:5px;">
+
+    <input
+        type="number"
+        id="doctorExperience"
+        placeholder="Experience (Years)"
+        required
+        style="padding:10px; margin:5px;">
+
+    <br><br>
+
+    <button
+        class="confirm-btn"
+        onclick="addDoctor()">
+        ✅ Save Doctor
+    </button>
+
+    <button
+        class="cancel-btn"
+        onclick="closeDoctorForm()">
+        ❌ Cancel
+    </button>
+
+</div>
+        <button
+            class="refresh-btn"
+            onclick="loadDoctors()">
+
+            🔄 Refresh
+
+        </button>
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Doctor</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Specialization</th>
+                    <th>Experience</th>
+                    <th>Availability</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="doctorTableBody">
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty-message">
+
+                        Loading doctors...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- ================= LAB REPORTS ================= -->
+
+<section class="section-box">
+
+    <div class="section-header">
+
+        <h2>🧪 Add Lab Report</h2>
+
+    </div>
+
+    <div style="padding:20px; background:#f7fcfd; border-radius:10px;">
+
+        <select id="labAppointment" style="padding:10px; margin:5px; width:250px;">
+            <option value="">Select Appointment</option>
+        </select>
+
+        <input
+            type="text"
+            id="testName"
+            placeholder="Test Name"
+            style="padding:10px; margin:5px;">
+
+        <input
+            type="date"
+            id="testDate"
+            style="padding:10px; margin:5px;">
+
+        <input
+            type="text"
+            id="testResult"
+            placeholder="Test Result"
+            style="padding:10px; margin:5px;">
+
+        <br><br>
+
+        <button
+            class="confirm-btn"
+            onclick="addLabReport()">
+
+            💾 Save Lab Report
+
+        </button>
+
+    </div>
+
+</section>
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3>
+            🏥 MediCare Hospital
+        </h3>
+
+        <p>
+            Online Hospital Management System
+        </p>
+
+        <p>
+            © 2026 MediCare Hospital.
+            All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        // =========================================
+        // CHECK ADMIN LOGIN
+        // =========================================
+
+        const adminData =
+            localStorage.getItem("admin");
+
+
+        if (!adminData) {
+
+            alert("Please login as admin first.");
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+
+
+        const admin =
+            JSON.parse(adminData);
+
+
+        document.getElementById("welcomeAdmin")
+            .textContent =
+            `Welcome, ${admin.name || "Admin"} 👋`;
+
+
+        // =========================================
+        // LOGOUT
+        // =========================================
+
+        document.getElementById("logoutBtn")
+            .addEventListener("click", function () {
+
+                const confirmLogout =
+                    confirm(
+                        "Are you sure you want to logout?"
+                    );
+
+
+                if (confirmLogout) {
+
+                    localStorage.removeItem("admin");
+
+                    window.location.href =
+                        "admin-login.html";
+
+                }
+
+            });
+
+
+        // =========================================
+        // LOAD APPOINTMENTS
+        // =========================================
+
+        async function loadAppointments() {
+
+
+            const tableBody =
+                document.getElementById(
+                    "appointmentTableBody"
+                );
+
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty-message">
+
+                        Loading appointments...
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/api/admin/appointments"
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load appointments"
+                    );
+
+                }
+
+
+                const appointments =
+                    data.appointments || [];
+
+// =========================================
+// VIEW PRESCRIPTION
+// =========================================
+
+async function viewPrescription(appointmentId) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/admin/appointments/${appointmentId}/prescription`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                data.message || "Unable to load prescription"
+            );
+
+            return;
+        }
+
+        if (!data.prescription) {
+
+            alert("No prescription available.");
+
+            return;
+        }
+
+        alert(
+            "💊 Prescription\n\n" +
+            data.prescription
+        );
+
+    } catch (error) {
+
+        console.error("Prescription Error:", error);
+
+        alert(
+            "Unable to load prescription from backend."
+        );
+
+    }
+
+}
+                // =================================
+                // TOTAL APPOINTMENTS
+                // =================================
+
+                document.getElementById(
+                    "totalAppointments"
+                ).textContent =
+                    appointments.length;
+
+
+                // =================================
+                // PENDING
+                // =================================
+
+                const pending =
+                    appointments.filter(
+                        appointment =>
+                            appointment.status === "Pending"
+                    ).length;
+
+
+                document.getElementById(
+                    "pendingAppointments"
+                ).textContent =
+                    pending;
+
+
+                // =================================
+                // CONFIRMED
+                // =================================
+
+                const confirmed =
+                    appointments.filter(
+                        appointment =>
+                            appointment.status === "Confirmed"
+                    ).length;
+
+
+                document.getElementById(
+                    "confirmedAppointments"
+                ).textContent =
+                    confirmed;
+
+
+                // =================================
+                // CLEAR TABLE
+                // =================================
+
+                tableBody.innerHTML = "";
+
+
+                // =================================
+                // NO APPOINTMENTS
+                // =================================
+
+                if (appointments.length === 0) {
+
+                    tableBody.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="empty-message">
+
+                                📅 No appointments found.
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                // =================================
+                // SHOW APPOINTMENTS
+                // =================================
+
+                appointments.forEach(
+                    function (appointment) {
+
+
+                        const row =
+                            document.createElement("tr");
+
+
+                        const status =
+                            appointment.status ||
+                            "Pending";
+
+
+                        let statusClass =
+                            "pending";
+
+
+                        if (status === "Confirmed") {
+
+                            statusClass =
+                                "confirmed";
+
+                        }
+
+                        else if (
+                            status === "Cancelled"
+                        ) {
+
+                            statusClass =
+                                "cancelled";
+
+                        }
+
+
+                        let actionHTML = "—";
+                        if (appointment.prescription) {
+
+    actionHTML += `
+        <button
+            class="confirm-btn"
+            onclick="viewPrescription('${appointment._id}')">
+            💊 Prescription
+        </button>
+    `;
+
+}
+
+                        if (status === "Pending") {
+
+                            actionHTML = `
+
+                                <button
+                                    class="confirm-btn"
+                                    onclick="updateAppointment(
+                                        '${appointment._id}',
+                                        'Confirmed'
+                                    )">
+
+                                    ✅ Confirm
+
+                                </button>
+
+
+                                <button
+                                    class="cancel-btn"
+                                    onclick="updateAppointment(
+                                        '${appointment._id}',
+                                        'Cancelled'
+                                    )">
+
+                                    ❌ Cancel
+
+                                </button>
+
+                            `;
+
+                        }
+
+
+                        row.innerHTML = `
+
+                            <td>
+
+                                <strong>
+                                    ${appointment.patientName || "-"}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+                                ${appointment.phone || "-"}
+                            </td>
+
+
+                            <td>
+
+                                ${
+                                    appointment.doctor?.name
+                                    || "-"
+                                }
+
+                            </td>
+
+
+                            <td>
+                                ${appointment.department || "-"}
+                            </td>
+
+
+                            <td>
+                                ${appointment.date || "-"}
+                            </td>
+
+
+                            <td>
+                                ${appointment.time || "-"}
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="status ${statusClass}">
+
+                                    ${status}
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                ${actionHTML}
+                            </td>
+
+                        `;
+
+
+                        tableBody.appendChild(row);
+
+                    }
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Appointment Error:",
+                    error
+                );
+
+
+                tableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="error-message">
+
+                            ❌ Unable to load appointments
+                            from backend.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+        }
+
+
+        // =========================================
+        // UPDATE APPOINTMENT STATUS
+        // =========================================
+
+        async function updateAppointment(
+            appointmentId,
+            status
+        ) {
+
+
+            const confirmAction =
+                confirm(
+                    `Are you sure you want to mark this appointment as ${status}?`
+                );
+
+
+            if (!confirmAction) {
+
+                return;
+
+            }
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        `http://localhost:5000/api/admin/appointments/${appointmentId}`,
+                        {
+
+                            method: "PUT",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                status: status
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to update appointment"
+                    );
+
+                }
+
+
+                alert(
+                    `Appointment ${status.toLowerCase()} successfully!`
+                );
+
+
+                loadAppointments();
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Update Error:",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "Unable to update appointment."
+                );
+
+            }
+
+        }
+
+// =========================================
+// LOAD DOCTORS
+// =========================================
+
+async function loadDoctors() {
+
+    const tableBody =
+        document.getElementById("doctorTableBody");
+
+
+    tableBody.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="8"
+                class="empty-message">
+
+                Loading doctors...
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/doctors"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load doctors"
+            );
+
+        }
+
+
+        const doctors =
+            data.doctors || [];
+
+
+        tableBody.innerHTML = "";
+
+
+        if (doctors.length === 0) {
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty-message">
+
+                        👨‍⚕️ No doctors found.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        doctors.forEach(function (doctor) {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <strong>
+                        ${doctor.name || "-"}
+                    </strong>
+
+                </td>
+
+
+                <td>
+                    ${doctor.email || "-"}
+                </td>
+
+
+                <td>
+                    ${doctor.phone || "-"}
+                </td>
+
+
+                <td>
+                    ${doctor.department || "-"}
+                </td>
+
+
+                <td>
+                    ${doctor.specialization || "-"}
+                </td>
+
+
+                <td>
+
+                    🏆 ${doctor.experience || 0} Years
+
+                </td>
+
+
+                <td>
+
+                    <span class="status confirmed">
+
+                        🟢 ${doctor.availability || "Available Today"}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="confirm-btn"
+                        onclick="editDoctor('${doctor._id}')">
+
+                        ✏️ Edit
+
+                    </button>
+
+
+                    <button
+                        class="cancel-btn"
+                        onclick="deleteDoctor('${doctor._id}', '${doctor.name}')">
+
+                        🗑️ Delete
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        });
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Doctor Error:",
+            error
+        );
+
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="error-message">
+
+                    ❌ Unable to load doctors
+                    from backend.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+// =========================================
+// EDIT DOCTOR
+// =========================================
+
+async function editDoctor(doctorId) {
+
+    const experience =
+        prompt(
+            "Enter doctor experience in years:"
+        );
+
+
+    if (experience === null) {
+
+        return;
+
+    }
+
+
+    if (
+        experience.trim() === "" ||
+        isNaN(experience) ||
+        Number(experience) < 0
+    ) {
+
+        alert(
+            "Please enter a valid experience."
+        );
+
+        return;
+
+    }
+
+
+    const availability =
+        prompt(
+            "Enter availability:",
+            "Available Today"
+        );
+
+
+    if (availability === null) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/doctors/${doctorId}`,
+                {
+
+                    method: "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        experience:
+                            Number(experience),
+
+                        availability:
+                            availability
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to update doctor"
+            );
+
+        }
+
+
+        alert(
+            "Doctor updated successfully!"
+        );
+
+
+        loadDoctors();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Doctor Update Error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to update doctor."
+        );
+
+    }
+
+}
+
+
+// =========================================
+// DELETE DOCTOR
+// =========================================
+
+async function deleteDoctor(
+    doctorId,
+    doctorName
+) {
+
+    const confirmDelete =
+        confirm(
+            `Are you sure you want to delete ${doctorName}?`
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/doctors/${doctorId}`,
+                {
+
+                    method: "DELETE"
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to delete doctor"
+            );
+
+        }
+
+
+        alert(
+            "Doctor deleted successfully!"
+        );
+
+
+        loadDoctors();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Doctor Delete Error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to delete doctor."
+        );
+
+    }
+
+}
+        // =========================================
+        // LOAD PATIENTS
+        // =========================================
+
+        async function loadPatients() {
+
+
+            const tableBody =
+                document.getElementById(
+                    "patientTableBody"
+                );
+
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty-message">
+
+                        Loading patients...
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "http://localhost:5000/api/admin/patients"
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load patients"
+                    );
+
+                }
+
+
+                const patients =
+                    data.patients || [];
+
+
+                // =================================
+                // TOTAL PATIENTS
+                // =================================
+
+                document.getElementById(
+                    "totalPatients"
+                ).textContent =
+                    patients.length;
+
+
+                // =================================
+                // CLEAR TABLE
+                // =================================
+
+                tableBody.innerHTML = "";
+
+
+                // =================================
+                // NO PATIENTS
+                // =================================
+
+                if (patients.length === 0) {
+
+                    tableBody.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty-message">
+
+                                👥 No registered patients found.
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                // =================================
+                // SHOW PATIENTS
+                // =================================
+
+                patients.forEach(
+                    function (patient) {
+
+
+                        const row =
+                            document.createElement("tr");
+
+
+                        row.innerHTML = `
+
+                            <td>
+
+                                <strong>
+                                    ${patient.name || "-"}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+                                ${patient.email || "-"}
+                            </td>
+
+
+                            <td>
+                                ${patient.phone || "-"}
+                            </td>
+
+
+                            <td>
+                                ${patient.age || "-"}
+                            </td>
+
+
+                            <td>
+                                ${patient.gender || "-"}
+                            </td>
+
+                        `;
+
+
+                        tableBody.appendChild(row);
+
+                    }
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Patient Error:",
+                    error
+                );
+
+
+                tableBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="error-message">
+
+                            ❌ Unable to load patients
+                            from backend.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
+        }
+
+
+        // =========================================
+        // START DASHBOARD
+        // =========================================
+
+        loadAppointments();
+
+        loadPatients();
+        loadDoctors();
+
+async function addDoctor() {
+
+    const doctorData = {
+
+        name: document.getElementById("doctorName").value.trim(),
+
+        email: document.getElementById("doctorEmail").value.trim(),
+
+        phone: document.getElementById("doctorPhone").value.trim(),
+
+        password: document.getElementById("doctorPassword").value,
+
+        department: document.getElementById("doctorDepartment").value.trim(),
+
+        specialization:
+            document.getElementById("doctorSpecialization").value.trim(),
+
+        experience:
+            Number(document.getElementById("doctorExperience").value)
+
+    };
+
+
+    if (
+        !doctorData.name ||
+        !doctorData.email ||
+        !doctorData.phone ||
+        !doctorData.password ||
+        !doctorData.department ||
+        !doctorData.specialization ||
+        !doctorData.experience
+    ) {
+
+        alert("Please fill all fields.");
+
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/doctors",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(doctorData)
+
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to add doctor"
+            );
+
+        }
+
+
+        alert("✅ Doctor added successfully!");
+
+
+        // Clear form
+
+        document.getElementById("doctorName").value = "";
+        document.getElementById("doctorEmail").value = "";
+        document.getElementById("doctorPhone").value = "";
+        document.getElementById("doctorPassword").value = "";
+        document.getElementById("doctorDepartment").value = "";
+        document.getElementById("doctorSpecialization").value = "";
+        document.getElementById("doctorExperience").value = "";
+
+
+        // Reload doctor list
+
+        loadDoctors();
+
+
+    } catch (error) {
+
+        console.error("Add Doctor Error:", error);
+
+        alert(
+            error.message ||
+            "Unable to add doctor"
+        );
+
+    }
+
+}
+// =========================================
+// VIEW PRESCRIPTION
+// =========================================
+
+async function viewPrescription(appointmentId) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/admin/appointments/${appointmentId}/prescription`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            alert(data.message || "Unable to load prescription");
+
+            return;
+        }
+
+        if (!data.prescription) {
+
+            alert("💊 No prescription available.");
+
+            return;
+        }
+
+        alert(
+            "💊 PRESCRIPTION\n\n" +
+            data.prescription
+        );
+
+    } catch (error) {
+
+        console.error("Prescription Error:", error);
+
+        alert(
+            "❌ Unable to load prescription from backend."
+        );
+
+    }
+
+}
+// =========================================
+// ADMIN - VIEW PRESCRIPTION
+// =========================================
+
+async function viewPrescription(appointmentId) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/admin/appointments/${appointmentId}/prescription`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to load prescription"
+            );
+        }
+
+        if (!data.prescription || data.prescription.trim() === "") {
+
+            alert("💊 No prescription available for this appointment.");
+
+            return;
+        }
+
+        alert(
+            "💊 PRESCRIPTION\n\n" +
+            data.prescription
+        );
+
+    } catch (error) {
+
+        console.error("Prescription Error:", error);
+
+        alert(
+            error.message ||
+            "Unable to load prescription."
+        );
+
+    }
+
+}
+// =========================================
+// LOAD APPOINTMENTS FOR LAB REPORT
+// =========================================
+
+async function loadLabAppointments() {
+
+    const select = document.getElementById("labAppointment");
+
+    select.innerHTML = '<option value="">Select Appointment</option>';
+
+    try {
+
+        const response = await fetch("http://localhost:5000/api/admin/appointments");
+
+        const data = await response.json();
+
+        data.appointments.forEach(appointment => {
+
+            select.innerHTML += `
+                <option value="${appointment._id}"
+                        data-patient="${appointment.patientId}">
+                    ${appointment.patientName} - ${appointment.date}
+                </option>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+// =========================================
+// ADD LAB REPORT
+// =========================================
+
+async function addLabReport() {
+
+    const select = document.getElementById("labAppointment");
+
+    const appointmentId = select.value;
+
+    const patientId =
+        select.options[select.selectedIndex].dataset.patient;
+
+    const testName =
+        document.getElementById("testName").value;
+
+    const testDate =
+        document.getElementById("testDate").value;
+
+    const result =
+        document.getElementById("testResult").value;
+
+    const response = await fetch("http://localhost:5000/api/lab-reports", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            patientId,
+            appointmentId,
+            testName,
+            testDate,
+            result
+
+        })
+
+    });
+
+    const data = await response.json();
+
+    alert(data.message);
+
+}
+
+
+// =========================================
+// START
+// =========================================
+
+loadLabAppointments();
+    </script>
+
+
+</body>
+
+</html>

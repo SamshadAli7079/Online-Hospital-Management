@@ -1,0 +1,8 @@
+$kind: http-request
+name: http://localhost:5000/api/doctors
+description: ""
+url: http://localhost:5000/api/doctors
+method: GET
+settings:
+  protocolVersion: auto
+order: 1786277539790

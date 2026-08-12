@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Doctor Dashboard | MediCare Hospital</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #f4f8fb;
+        color: #222;
+    }
+
+    /* ================= HEADER ================= */
+
+    .top-header {
+        background: linear-gradient(135deg, #075e6e, #0b7285);
+        color: white;
+        padding: 20px 7%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .brand h1 {
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+
+    .brand p {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .logout-btn {
+        border: none;
+        background: white;
+        color: #087f8c;
+        padding: 11px 20px;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .logout-btn:hover {
+        background: #e9fbff;
+    }
+
+    /* ================= MAIN ================= */
+
+    .dashboard {
+        width: 86%;
+        max-width: 1400px;
+        margin: 35px auto;
+    }
+
+    /* ================= WELCOME ================= */
+
+    .welcome-box {
+        background: white;
+        padding: 28px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        border-left: 5px solid #0b7285;
+    }
+
+    .welcome-box h2 {
+        color: #075e6e;
+        margin-bottom: 8px;
+        font-size: 26px;
+    }
+
+    .welcome-box p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 22px;
+        border-radius: 14px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: 0.3s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+        background: #e9f9fb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 27px;
+    }
+
+    .stat-info h3 {
+        font-size: 25px;
+        color: #075e6e;
+        margin-bottom: 3px;
+    }
+
+    .stat-info p {
+        color: #777;
+        font-size: 14px;
+    }
+
+    /* ================= SECTION CARD ================= */
+
+    .section-card {
+        background: white;
+        padding: 28px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        margin-bottom: 30px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        color: #075e6e;
+        font-size: 22px;
+    }
+
+    .refresh-btn {
+        border: none;
+        background: #e9f9fb;
+        color: #087f8c;
+        padding: 9px 15px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .refresh-btn:hover {
+        background: #d6f3f6;
+    }
+
+    /* ================= PROFILE ================= */
+
+    .profile-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .profile-item {
+        background: #f6fafc;
+        padding: 17px;
+        border-radius: 9px;
+        border: 1px solid #e7f0f2;
+    }
+
+    .profile-item strong {
+        display: block;
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 7px;
+    }
+
+    .profile-item span {
+        font-weight: bold;
+        color: #222;
+        word-break: break-word;
+    }
+
+    /* ================= TABLE ================= */
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .appointment-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+    }
+
+    .appointment-table th {
+        background: #087f8c;
+        color: white;
+        padding: 14px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .appointment-table td {
+        padding: 15px 14px;
+        border-bottom: 1px solid #e5e5e5;
+        font-size: 14px;
+    }
+
+    .appointment-table tbody tr:hover {
+        background: #f7fcfd;
+    }
+
+    /* ================= STATUS ================= */
+
+    .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-confirmed {
+        background: #dff6e7;
+        color: #16743a;
+    }
+
+    .status-cancelled {
+        background: #fde2e2;
+        color: #b42318;
+    }
+
+    /* ================= ACTION BUTTONS ================= */
+
+    .action-btn {
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 2px;
+    }
+
+    .confirm-btn {
+        background: #198754;
+    }
+
+    .confirm-btn:hover {
+        background: #146c43;
+    }
+
+    .cancel-btn {
+        background: #dc3545;
+    }
+
+    .cancel-btn:hover {
+        background: #b02a37;
+    }
+
+    .disabled-btn {
+        background: #999;
+        cursor: not-allowed;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty-message {
+        text-align: center;
+        padding: 30px !important;
+        color: #777;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        background: #063f4a;
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+        margin-top: 50px;
+    }
+
+    footer h3 {
+        margin-bottom: 8px;
+    }
+
+    footer p {
+        color: #c9e3e7;
+        margin-top: 5px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1050px) {
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .profile-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 650px) {
+
+        .top-header {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .dashboard {
+            width: 92%;
+            margin: 25px auto;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .welcome-box,
+        .section-card {
+            padding: 20px;
+        }
+
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="top-header">
+
+
+<div class="brand">
+
+    <h1>🏥 MediCare Hospital</h1>
+
+    <p>Doctor Management Portal</p>
+
+</div>
+
+<button
+    class="logout-btn"
+    id="logoutBtn">
+
+    🚪 Logout
+
+</button>
+
+
+</header>
+
+<!-- ================= MAIN ================= -->
+
+<main class="dashboard">
+
+
+<!-- ================= WELCOME ================= -->
+
+<section class="welcome-box">
+
+    <h2 id="doctorName">
+        Welcome, Doctor 👋
+    </h2>
+
+    <p>
+        Manage your patients, appointments and
+        appointment status from your doctor dashboard.
+    </p>
+
+</section>
+
+
+<!-- ================= STATISTICS ================= -->
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            📅
+        </div>
+
+        <div class="stat-info">
+
+            <h3 id="totalAppointments">
+                0
+            </h3>
+
+            <p>Total Appointments</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🟢
+        </div>
+
+        <div class="stat-info">
+
+            <h3 id="confirmedAppointments">
+                0
+            </h3>
+
+            <p>Confirmed</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🟡
+        </div>
+
+        <div class="stat-info">
+
+            <h3 id="pendingAppointments">
+                0
+            </h3>
+
+            <p>Pending</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🔴
+        </div>
+
+        <div class="stat-info">
+
+            <h3 id="cancelledAppointments">
+                0
+            </h3>
+
+            <p>Cancelled</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DOCTOR PROFILE ================= -->
+
+<section class="section-card">
+
+    <h2 class="section-title">
+        👨‍⚕️ Doctor Profile
+    </h2>
+
+    <br>
+
+    <div class="profile-grid">
+
+        <div class="profile-item">
+
+            <strong>
+                Doctor Name
+            </strong>
+
+            <span id="profileName">
+                Loading...
+            </span>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <strong>
+                Doctor ID
+            </strong>
+
+            <span id="profileId">
+                Loading...
+            </span>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <strong>
+                Department
+            </strong>
+
+            <span id="profileDepartment">
+                Loading...
+            </span>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <strong>
+                Specialization
+            </strong>
+
+            <span id="profileSpecialization">
+                Loading...
+            </span>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <strong>
+                Phone
+            </strong>
+
+            <span id="profilePhone">
+                Loading...
+            </span>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <strong>
+                Email
+            </strong>
+
+            <span id="profileEmail">
+                Loading...
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= APPOINTMENTS ================= -->
+
+<section class="section-card">
+
+    <div class="section-header">
+
+        <h2 class="section-title">
+            📅 Patient Appointments
+        </h2>
+
+        <button
+            class="refresh-btn"
+            onclick="loadDoctorAppointments()">
+
+            🔄 Refresh
+
+        </button>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table class="appointment-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Patient
+                    </th>
+
+                    <th>
+                        Phone
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Department
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Time
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="appointmentTableBody">
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty-message">
+
+                        Loading appointments...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+
+<h3>
+    🏥 MediCare Hospital
+</h3>
+
+<p>
+    Online Hospital Management System
+</p>
+
+<p>
+    © 2026 MediCare Hospital. All Rights Reserved.
+</p>
+
+
+</footer>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/* =========================================
+   GET LOGGED-IN DOCTOR
+========================================= */
+
+const doctorData =
+    JSON.parse(localStorage.getItem("doctor"));
+
+
+if (!doctorData || !doctorData.id) {
+
+    alert("Doctor login required.");
+
+    window.location.href =
+        "doctor-login.html";
+
+}
+
+
+/* =========================================
+   DOCTOR INFORMATION
+========================================= */
+
+document.getElementById("doctorName")
+    .textContent =
+    `Welcome, ${doctorData.name || "Doctor"} 👋`;
+
+
+document.getElementById("profileName")
+    .textContent =
+    doctorData.name || "-";
+
+
+document.getElementById("profileId")
+    .textContent =
+    doctorData.id || "-";
+
+
+document.getElementById("profileDepartment")
+    .textContent =
+    doctorData.department || "-";
+
+
+document.getElementById("profileSpecialization")
+    .textContent =
+    doctorData.specialization || "-";
+
+
+document.getElementById("profilePhone")
+    .textContent =
+    doctorData.phone || "-";
+
+
+document.getElementById("profileEmail")
+    .textContent =
+    doctorData.email || "-";
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+document.getElementById("logoutBtn")
+    .addEventListener("click", function () {
+
+        const confirmLogout =
+            confirm(
+                "Are you sure you want to logout?"
+            );
+
+        if (confirmLogout) {
+
+            localStorage.removeItem("doctor");
+            localStorage.removeItem("doctorName");
+
+            window.location.href =
+                "doctor-login.html";
+
+        }
+
+    });
+
+
+/* =========================================
+   LOAD DOCTOR APPOINTMENTS
+========================================= */
+
+async function loadDoctorAppointments() {
+
+    const tableBody =
+        document.getElementById(
+            "appointmentTableBody"
+        );
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/doctors/${doctorData.id}/appointments`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load appointments"
+            );
+
+        }
+
+
+        const appointments =
+            data.appointments || [];
+
+
+        /* ===============================
+           UPDATE STATISTICS
+        =============================== */
+
+        let total = appointments.length;
+        let confirmed = 0;
+        let pending = 0;
+        let cancelled = 0;
+
+
+        appointments.forEach(
+            function (appointment) {
+
+                const status =
+                    appointment.status ||
+                    "Pending";
+
+
+                if (status === "Confirmed") {
+
+                    confirmed++;
+
+                }
+                else if (status === "Cancelled") {
+
+                    cancelled++;
+
+                }
+                else {
+
+                    pending++;
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "totalAppointments"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "confirmedAppointments"
+        ).textContent = confirmed;
+
+
+        document.getElementById(
+            "pendingAppointments"
+        ).textContent = pending;
+
+
+        document.getElementById(
+            "cancelledAppointments"
+        ).textContent = cancelled;
+
+
+        /* ===============================
+           NO APPOINTMENTS
+        =============================== */
+
+        if (appointments.length === 0) {
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="8"
+                        class="empty-message">
+
+                        📅 No patient appointments found.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tableBody.innerHTML = "";
+
+
+        /* ===============================
+           SHOW APPOINTMENTS
+        =============================== */
+
+        appointments.forEach(
+            function (appointment) {
+
+                const row =
+                    document.createElement("tr");
+
+
+                const status =
+                    appointment.status ||
+                    "Pending";
+
+
+                let statusClass =
+                    "status-pending";
+
+
+                if (status === "Confirmed") {
+
+                    statusClass =
+                        "status-confirmed";
+
+                }
+
+
+                if (status === "Cancelled") {
+
+                    statusClass =
+                        "status-cancelled";
+
+                }
+
+
+                /* =========================
+                   ACTION BUTTONS
+                ========================= */
+
+                let actionHTML = "";
+
+
+                if (status === "Pending") {
+
+                    actionHTML = `
+
+                        <button
+                            class="action-btn confirm-btn"
+                            onclick="updateAppointment(
+                                '${appointment._id}',
+                                'Confirmed'
+                            )">
+
+                            ✓ Confirm
+
+                        </button>
+
+                        <button
+                            class="action-btn cancel-btn"
+                            onclick="updateAppointment(
+                                '${appointment._id}',
+                                'Cancelled'
+                            )">
+
+                            ✕ Cancel
+
+                        </button>
+
+                    `;
+
+                }
+else if (status === "Confirmed") {
+
+    actionHTML = `
+
+        <button
+            class="action-btn confirm-btn"
+            onclick="viewPatient('${appointment._id}')">
+
+            👤 Patient Details
+
+        </button>
+
+        <button
+            class="action-btn"
+            style="background:#6f42c1;"
+            onclick="addPrescription('${appointment._id}')">
+
+            💊 Prescription
+
+        </button>
+        <button
+    class="action-btn"
+    style="background:#0b7285;"
+    onclick="addLabReport(
+        '${appointment._id}',
+        '${appointment.patientId}'
+    )">
+
+    🧪 Lab Report
+
+</button>
+
+        <button
+            class="action-btn cancel-btn"
+            onclick="updateAppointment(
+                '${appointment._id}',
+                'Cancelled'
+            )">
+
+            ✕ Cancel
+
+        </button>
+
+    `;
+}
+                else {
+
+                    actionHTML = `
+
+                        <button
+                            class="action-btn disabled-btn"
+                            disabled>
+
+                            Cancelled
+
+                        </button>
+
+                    `;
+
+                }
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <strong>
+                            ${appointment.patientName || "-"}
+                        </strong>
+
+                    </td>
+
+                    <td>
+                        ${appointment.phone || "-"}
+                    </td>
+
+                    <td>
+                        ${appointment.email || "-"}
+                    </td>
+
+                    <td>
+                        ${appointment.department || "-"}
+                    </td>
+
+                    <td>
+                        ${appointment.date || "-"}
+                    </td>
+
+                    <td>
+                        ${appointment.time || "-"}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="status-badge ${statusClass}">
+
+                            ${status}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        ${actionHTML}
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            }
+        );
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Appointment loading error:",
+            error
+        );
+
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="8"
+                    class="empty-message"
+                    style="color:#dc3545;">
+
+                    ❌ Unable to load appointments
+                    from backend.
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   UPDATE APPOINTMENT STATUS
+========================================= */
+
+async function updateAppointment(
+    appointmentId,
+    newStatus
+) {
+
+    const confirmAction =
+        confirm(
+            `Are you sure you want to mark this appointment as ${newStatus}?`
+        );
+
+
+    if (!confirmAction) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:5000/api/admin/appointments/${appointmentId}`,
+                {
+                    method: "PATCH",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        status: newStatus
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to update appointment"
+            );
+
+        }
+
+
+        alert(
+            `Appointment ${newStatus.toLowerCase()} successfully!`
+        );
+
+
+        loadDoctorAppointments();
+
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Unable to update appointment.\n" +
+            error.message
+        );
+
+    }
+
+}
+// =====================================================
+// VIEW PATIENT DETAILS
+// =====================================================
+
+async function viewPatient(appointmentId) {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/appointments/details/${appointmentId}`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to load patient details"
+            );
+
+        }
+
+        const appointment = data.appointment;
+
+        alert(
+            "👤 PATIENT DETAILS\n\n" +
+
+            "Name: " +
+            (appointment.patientName || "-") +
+
+            "\nPhone: " +
+            (appointment.phone || "-") +
+
+            "\nEmail: " +
+            (appointment.email || "-") +
+
+            "\nAge: " +
+            (appointment.age || "-") +
+
+            "\nDepartment: " +
+            (appointment.department || "-") +
+
+            "\nProblem: " +
+            (appointment.problem || "Not mentioned") +
+
+            "\nDate: " +
+            (appointment.date || "-") +
+
+            "\nTime: " +
+            (appointment.time || "-")
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to load patient details.\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// ADD PRESCRIPTION
+// =====================================================
+
+async function addPrescription(appointmentId) {
+
+    const prescription = prompt(
+        "💊 Enter prescription:\n\nExample:\nParacetamol 500mg - 2 times daily\nVitamin D - Once daily"
+    );
+
+    if (prescription === null) {
+
+        return;
+
+    }
+
+    if (prescription.trim() === "") {
+
+        alert("Please enter prescription.");
+
+        return;
+
+    }
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/appointments/${appointmentId}/prescription`,
+            {
+
+                method: "PATCH",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    prescription: prescription
+
+                })
+
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to save prescription"
+            );
+
+        }
+
+        alert(
+            "✅ Prescription saved successfully!"
+        );
+
+        loadDoctorAppointments();
+
+    } catch (error) {
+
+        console.error(
+            "Prescription Error:",
+            error
+        );
+
+        alert(
+            "❌ Unable to save prescription.\n" +
+            error.message
+        );
+
+    }
+
+}
+
+/* =========================================
+   START
+========================================= */
+
+loadDoctorAppointments();
+
+// =====================================================
+// ADD LAB REPORT
+// =====================================================
+
+async function addLabReport(appointmentId, patientId) {
+
+    const testName = prompt(
+        "🧪 Enter Lab Test Name:\n\nExample: CBC, Blood Test, X-Ray"
+    );
+
+    if (testName === null) {
+        return;
+    }
+
+    if (testName.trim() === "") {
+
+        alert("Please enter test name.");
+
+        return;
+
+    }
+
+
+    const testDate = prompt(
+        "📅 Enter Test Date:\n\nExample: 2026-08-12"
+    );
+
+    if (testDate === null) {
+        return;
+    }
+
+    if (testDate.trim() === "") {
+
+        alert("Please enter test date.");
+
+        return;
+
+    }
+
+
+    const result = prompt(
+        "📋 Enter Test Result:"
+    );
+
+    if (result === null) {
+        return;
+    }
+
+    if (result.trim() === "") {
+
+        alert("Please enter test result.");
+
+        return;
+
+    }
+
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/lab-reports`,
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    patientId: patientId,
+
+                    appointmentId: appointmentId,
+
+                    testName: testName,
+
+                    testDate: testDate,
+
+                    result: result,
+
+                    status: "Completed"
+
+                })
+
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to add lab report"
+            );
+
+        }
+
+
+        alert(
+            "✅ Lab report added successfully!"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Lab Report Error:",
+            error
+        );
+
+        alert(
+            "❌ Unable to add lab report.\n" +
+            error.message
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - MediCare Hospital</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f9fc;
+            color: #222;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #0b7285;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 18px 7%;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 25px;
+
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #d9faff;
+        }
+
+
+        .nav-links {
+            display: flex;
+
+            list-style: none;
+
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #d9faff;
+        }
+
+
+        /* ================= LOGIN SECTION ================= */
+
+        .admin-login-section {
+
+            min-height: 78vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 60px 20px;
+        }
+
+
+        .admin-login-box {
+
+            width: 100%;
+
+            max-width: 450px;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.10);
+        }
+
+
+        /* ================= ADMIN ICON ================= */
+
+        .admin-icon {
+
+            width: 80px;
+
+            height: 80px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #e9fbff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 40px;
+        }
+
+
+        .admin-login-box h1 {
+
+            text-align: center;
+
+            color: #075e6e;
+
+            margin-bottom: 10px;
+
+            font-size: 31px;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 30px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #333;
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ccd6da;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #0b7285;
+
+            box-shadow:
+                0 0 0 2px rgba(11,114,133,0.1);
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #0b7285;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .login-btn:hover {
+
+            background: #075e6e;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+
+            display: none;
+
+            padding: 13px;
+
+            margin-bottom: 20px;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            font-weight: bold;
+        }
+
+
+        .success {
+
+            background: #e7f8ed;
+
+            color: #16803a;
+        }
+
+
+        .error {
+
+            background: #fdeaea;
+
+            color: #c62828;
+        }
+
+
+        /* ================= LINKS ================= */
+
+        .login-links {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            line-height: 1.9;
+
+            color: #666;
+        }
+
+
+        .login-links a {
+
+            color: #0b7285;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .login-links a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            background: #063f4a;
+
+            color: white;
+
+            padding: 35px 20px;
+
+            text-align: center;
+        }
+
+
+        footer h3 {
+
+            margin-bottom: 10px;
+        }
+
+
+        footer p {
+
+            color: #d7eef1;
+
+            margin: 6px 0;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .nav-links {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .admin-login-section {
+
+                padding: 40px 15px;
+            }
+
+            .admin-login-box {
+
+                padding: 30px 22px;
+            }
+
+            .admin-login-box h1 {
+
+                font-size: 27px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+
+            🏥 MediCare <span>Hospital</span>
+
+        </div>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="doctors.html">
+                    Doctors
+                </a>
+            </li>
+
+            <li>
+                <a href="appointment.html">
+                    Appointment
+                </a>
+            </li>
+
+            <li>
+                <a href="login.html">
+                    Patient Login
+                </a>
+            </li>
+
+            <li>
+                <a href="doctor-login.html">
+                    Doctor Login
+                </a>
+            </li>
+
+            <li>
+                <a href="admin-login.html">
+                    Admin Login
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= ADMIN LOGIN ================= -->
+
+    <section class="admin-login-section">
+
+
+        <div class="admin-login-box">
+
+
+            <div class="admin-icon">
+
+                🔐
+
+            </div>
+
+
+            <h1>
+
+                Admin Login
+
+            </h1>
+
+
+            <p class="subtitle">
+
+                Login to access the
+                MediCare Hospital Administration Dashboard
+
+            </p>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="message">
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form id="adminLoginForm">
+
+
+                <div class="form-group">
+
+                    <label for="email">
+
+                        Admin Email
+
+                    </label>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter admin email"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+
+                        Password
+
+                    </label>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter admin password"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn">
+
+                    🔐 Login as Admin
+
+                </button>
+
+
+            </form>
+
+
+            <!-- LINKS -->
+
+            <div class="login-links">
+
+                <div>
+
+                    Are you a doctor?
+
+                    <a href="doctor-login.html">
+
+                        Doctor Login
+
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    Are you a patient?
+
+                    <a href="login.html">
+
+                        Patient Login
+
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    <a href="index.html">
+
+                        ← Back to Home
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3>
+
+            🏥 MediCare Hospital
+
+        </h3>
+
+
+        <p>
+
+            Online Hospital Management System
+
+        </p>
+
+
+        <p>
+
+            © 2026 MediCare Hospital.
+            All Rights Reserved.
+
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        const adminLoginForm =
+            document.getElementById(
+                "adminLoginForm"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        adminLoginForm.addEventListener(
+            "submit",
+            async function(event) {
+
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                try {
+
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5000/api/admin/login",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        email: email,
+
+                                        password: password
+
+                                    })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (response.ok) {
+
+
+                        message.textContent =
+                            "✅ Admin login successful!";
+
+
+                        message.className =
+                            "message success";
+
+
+                        message.style.display =
+                            "block";
+
+
+                        /* Save admin information */
+
+                        localStorage.setItem(
+                            "admin",
+                            JSON.stringify(data.admin)
+                        );
+
+
+                        /* Open Admin Dashboard */
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "admin-dashboard.html";
+
+                            },
+                            1000
+                        );
+
+
+                    } else {
+
+
+                        message.textContent =
+                            data.message ||
+                            "Invalid admin email or password";
+
+
+                        message.className =
+                            "message error";
+
+
+                        message.style.display =
+                            "block";
+
+                    }
+
+
+                } catch (error) {
+
+
+                    console.error(error);
+
+
+                    message.textContent =
+                        "Backend server se connection nahi ho raha hai.";
+
+
+                    message.className =
+                        "message error";
+
+
+                    message.style.display =
+                        "block";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

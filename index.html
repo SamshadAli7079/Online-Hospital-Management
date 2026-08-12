@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MediCare Hospital | Quality Healthcare</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #f5f9fc;
+        color: #222;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+        background: #ffffff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 7%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+        color: #075e6e;
+        font-size: 25px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .logo span {
+        color: #0b7285;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+        color: #0b7285;
+    }
+
+    .nav-register {
+        background: #0b7285;
+        color: white !important;
+        padding: 10px 16px;
+        border-radius: 6px;
+    }
+
+    .nav-register:hover {
+        background: #075e6e;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+        min-height: 590px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+        padding: 80px 7%;
+        background:
+            linear-gradient(135deg, #e8faff 0%, #ffffff 55%, #eefcff 100%);
+    }
+
+    .hero-text {
+        width: 55%;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: #dff7fa;
+        color: #087f8c;
+        padding: 9px 16px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 54px;
+        line-height: 1.15;
+        color: #064c59;
+        margin-bottom: 22px;
+    }
+
+    .hero-text h1 span {
+        color: #0b8b9d;
+    }
+
+    .hero-text p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #59666a;
+        margin-bottom: 30px;
+        max-width: 650px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        text-decoration: none;
+        padding: 14px 24px;
+        border-radius: 7px;
+        font-weight: bold;
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+    .primary-btn {
+        background: #0b7285;
+        color: white;
+    }
+
+    .primary-btn:hover {
+        background: #075e6e;
+        transform: translateY(-2px);
+    }
+
+    .secondary-btn {
+        border: 2px solid #0b7285;
+        color: #0b7285;
+        background: white;
+    }
+
+    .secondary-btn:hover {
+        background: #0b7285;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* ================= HERO CARD ================= */
+
+    .hero-card {
+        width: 390px;
+        background: white;
+        padding: 35px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        border: 1px solid #e5f3f5;
+    }
+
+    .hospital-icon {
+        width: 110px;
+        height: 110px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #e8faff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 65px;
+    }
+
+    .hero-card h2 {
+        color: #075e6e;
+        margin-bottom: 12px;
+    }
+
+    .hero-card p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 22px;
+    }
+
+    .open-status {
+        display: inline-block;
+        background: #e8f8ee;
+        color: #16803a;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* ================= QUICK INFO ================= */
+
+    .quick-info {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 0 7%;
+        margin-top: -35px;
+        position: relative;
+        z-index: 5;
+    }
+
+    .info-card {
+        background: white;
+        padding: 22px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .info-icon {
+        font-size: 30px;
+    }
+
+    .info-card h3 {
+        color: #075e6e;
+        font-size: 17px;
+        margin-bottom: 5px;
+    }
+
+    .info-card p {
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* ================= SECTION ================= */
+
+    .section {
+        padding: 80px 7%;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+        font-size: 36px;
+        color: #075e6e;
+        margin-bottom: 12px;
+    }
+
+    .section-title p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    /* ================= SERVICES ================= */
+
+    .services {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+
+    .service-card {
+        background: white;
+        padding: 32px 22px;
+        text-align: center;
+        border-radius: 14px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        transition: 0.3s;
+        border: 1px solid #edf4f5;
+    }
+
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.11);
+    }
+
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: #e8faff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+    }
+
+    .service-card h3 {
+        color: #075e6e;
+        margin-bottom: 10px;
+    }
+
+    .service-card p {
+        color: #666;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about {
+        background: white;
+        display: flex;
+        align-items: center;
+        gap: 60px;
+    }
+
+    .about-content {
+        flex: 1;
+    }
+
+    .about-label {
+        color: #0b7285;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .about-content h2 {
+        font-size: 36px;
+        color: #075e6e;
+        margin-bottom: 20px;
+    }
+
+    .about-content p {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 15px;
+    }
+
+    .about-box {
+        flex: 1;
+        background: linear-gradient(135deg, #e8faff, #f7fdff);
+        padding: 35px;
+        border-radius: 18px;
+        border: 1px solid #d8f0f3;
+    }
+
+    .about-box h3 {
+        color: #075e6e;
+        margin-bottom: 22px;
+        font-size: 23px;
+    }
+
+    .feature {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 15px;
+        color: #555;
+    }
+
+    .feature span {
+        color: #16803a;
+        font-weight: bold;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats {
+        background: #f5f9fc;
+        padding: 60px 7%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+
+    .stat-card {
+        text-align: center;
+        background: white;
+        padding: 28px 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .stat-card h2 {
+        color: #0b7285;
+        font-size: 32px;
+        margin-bottom: 7px;
+    }
+
+    .stat-card p {
+        color: #666;
+    }
+
+    /* ================= CTA ================= */
+
+    .cta {
+        background: linear-gradient(135deg, #075e6e, #0b8b9d);
+        color: white;
+        text-align: center;
+        padding: 75px 20px;
+    }
+
+    .cta h2 {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    .cta p {
+        margin-bottom: 28px;
+        font-size: 17px;
+    }
+
+    .cta .btn {
+        background: white;
+        color: #0b7285;
+    }
+
+    .cta .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        background: #063f4a;
+        color: white;
+        padding: 50px 7% 25px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 40px;
+    }
+
+    footer h3 {
+        margin-bottom: 16px;
+    }
+
+    footer p,
+    footer a {
+        color: #d7eef1;
+        line-height: 1.9;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    footer a:hover {
+        color: white;
+    }
+
+    .copyright {
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin-top: 35px;
+        padding-top: 20px;
+        color: #c5e1e5;
+        font-size: 14px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1100px) {
+
+        nav ul {
+            gap: 14px;
+        }
+
+        nav ul li a {
+            font-size: 13px;
+        }
+
+        .hero-text h1 {
+            font-size: 45px;
+        }
+
+        .services {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 900px) {
+
+        nav {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        .hero-text {
+            width: 100%;
+        }
+
+        .hero-text p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons {
+            justify-content: center;
+        }
+
+        .hero-card {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .quick-info {
+            grid-template-columns: 1fr;
+            margin-top: 25px;
+        }
+
+        .about {
+            flex-direction: column;
+        }
+
+        .about-content,
+        .about-box {
+            width: 100%;
+        }
+
+        .stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+    }
+
+    @media (max-width: 600px) {
+
+        nav {
+            padding: 15px 5%;
+        }
+
+        .logo {
+            font-size: 21px;
+        }
+
+        nav ul {
+            gap: 10px 15px;
+        }
+
+        nav ul li a {
+            font-size: 12px;
+        }
+
+        .hero {
+            padding: 55px 5%;
+        }
+
+        .hero-text h1 {
+            font-size: 34px;
+        }
+
+        .hero-text p {
+            font-size: 16px;
+        }
+
+        .hero-card {
+            padding: 28px 20px;
+        }
+
+        .services {
+            grid-template-columns: 1fr;
+        }
+
+        .section {
+            padding: 60px 5%;
+        }
+
+        .section-title h2,
+        .about-content h2,
+        .cta h2 {
+            font-size: 29px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr 1fr;
+            padding: 45px 5%;
+        }
+
+        .stat-card h2 {
+            font-size: 26px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        🏥 MediCare <span>Hospital</span>
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="index.html">Home</a>
+        </li>
+
+        <li>
+            <a href="doctors.html">Doctors</a>
+        </li>
+
+        <li>
+            <a href="appointment.html">Appointment</a>
+        </li>
+
+        <li>
+            <a href="login.html">Patient Login</a>
+        </li>
+
+        <li>
+            <a href="register.html" class="nav-register">
+                Register
+            </a>
+        </li>
+
+        <li>
+            <a href="doctor-login.html">Doctor Login</a>
+        </li>
+
+        <li>
+            <a href="admin-login.html">Admin Login</a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-text">
+
+        <div class="hero-badge">
+            🏥 Trusted Online Hospital Management System
+        </div>
+
+        <h1>
+            Your Health,
+            <span>Our Priority</span>
+        </h1>
+
+        <p>
+            Welcome to MediCare Hospital. Manage your healthcare
+            journey easily with our online hospital management
+            system. Register, consult doctors and book appointments
+            conveniently from anywhere.
+        </p>
+
+        <div class="buttons">
+
+            <a href="appointment.html"
+               class="btn primary-btn">
+                📅 Book Appointment
+            </a>
+
+            <a href="doctors.html"
+               class="btn secondary-btn">
+                👨‍⚕️ View Our Doctors
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="hospital-icon">
+            🏥
+        </div>
+
+        <h2>
+            MediCare Hospital
+        </h2>
+
+        <p>
+            Quality healthcare services with experienced
+            doctors and convenient online appointment booking.
+        </p>
+
+        <div class="open-status">
+            ● Hospital Services Available
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= QUICK INFO ================= -->
+
+<section class="quick-info">
+
+    <div class="info-card">
+
+        <div class="info-icon">👨‍⚕️</div>
+
+        <div>
+            <h3>Experienced Doctors</h3>
+            <p>Qualified medical professionals</p>
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">📅</div>
+
+        <div>
+            <h3>Easy Appointment</h3>
+            <p>Book your appointment online</p>
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <div class="info-icon">🔐</div>
+
+        <div>
+            <h3>Patient Management</h3>
+            <p>Secure online healthcare system</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>Our Medical Services</h2>
+
+        <p>
+            Professional healthcare services for
+            different medical needs.
+        </p>
+
+    </div>
+
+
+    <div class="services">
+
+        <div class="service-card">
+
+            <div class="service-icon">❤️</div>
+
+            <h3>Cardiology</h3>
+
+            <p>
+                Professional care for heart and
+                cardiovascular conditions.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">🧠</div>
+
+            <h3>Neurology</h3>
+
+            <p>
+                Specialized diagnosis and treatment
+                for neurological problems.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">🦴</div>
+
+            <h3>Orthopedics</h3>
+
+            <p>
+                Complete care for bones, joints
+                and muscles.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">👶</div>
+
+            <h3>Pediatrics</h3>
+
+            <p>
+                Professional healthcare services
+                for children.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="section about">
+
+    <div class="about-content">
+
+        <div class="about-label">
+            About Our Hospital
+        </div>
+
+        <h2>
+            Healthcare Made Simple
+        </h2>
+
+        <p>
+            MediCare Hospital is designed to provide
+            convenient and accessible healthcare services
+            to patients through a modern online system.
+        </p>
+
+        <p>
+            Patients can register, login, book appointments
+            with doctors and track their appointment status
+            through the hospital management system.
+        </p>
+
+        <a href="doctors.html"
+           class="btn primary-btn">
+            Meet Our Doctors →
+        </a>
+
+    </div>
+
+
+    <div class="about-box">
+
+        <h3>
+            Why Choose MediCare?
+        </h3>
+
+        <div class="feature">
+            <span>✓</span>
+            Experienced & Qualified Doctors
+        </div>
+
+        <div class="feature">
+            <span>✓</span>
+            Easy Online Appointment Booking
+        </div>
+
+        <div class="feature">
+            <span>✓</span>
+            Patient Dashboard
+        </div>
+
+        <div class="feature">
+            <span>✓</span>
+            Doctor Dashboard
+        </div>
+
+        <div class="feature">
+            <span>✓</span>
+            Admin Management
+        </div>
+
+        <div class="feature">
+            <span>✓</span>
+            Secure Database Management
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat-card">
+        <h2>6+</h2>
+        <p>Specialist Doctors</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>6+</h2>
+        <p>Medical Departments</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>24/7</h2>
+        <p>Online Access</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>100%</h2>
+        <p>Patient Focused</p>
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <h2>
+        Need Medical Assistance?
+    </h2>
+
+    <p>
+        Find a doctor and book your appointment today.
+    </p>
+
+    <a href="appointment.html"
+       class="btn">
+        📅 Book Appointment
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-content">
+
+        <div>
+
+            <h3>
+                🏥 MediCare Hospital
+            </h3>
+
+            <p>
+                Quality healthcare services through
+                a convenient online hospital management system.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <p>
+                <a href="index.html">Home</a>
+            </p>
+
+            <p>
+                <a href="doctors.html">Doctors</a>
+            </p>
+
+            <p>
+                <a href="appointment.html">Appointment</a>
+            </p>
+
+            <p>
+                <a href="login.html">Patient Login</a>
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Contact Information
+            </h3>
+
+            <p>
+                📞 +91 98765 43210
+            </p>
+
+            <p>
+                📧 info@medicare.com
+            </p>
+
+            <p>
+                📍 Hyderabad, India
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 MediCare Hospital.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+
+</body>
+
+</html>

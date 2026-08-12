@@ -18,7 +18,10 @@ const app = express();
 // MIDDLEWARE
 // =====================================================
 
-app.use(cors());
+app.use(cors({
+    origin: "https://medicare-hospit.netlify.app/",
+    credentials: true
+}));
 app.use(express.json());
 
 
@@ -1585,12 +1588,75 @@ app.put(
 );
 
 // =====================================================
+// ADMIN - ADD LAB REPORT
+// =====================================================
+
+app.post("/api/lab-reports", async (req, res) => {
+
+    try {
+
+        const {
+            patientId,
+            appointmentId,
+            testName,
+            testDate,
+            result
+        } = req.body;
+
+        if (
+            !patientId ||
+            !appointmentId ||
+            !testName ||
+            !testDate ||
+            !result
+        ) {
+            return res.status(400).json({
+                message: "All lab report fields are required"
+            });
+        }
+
+        const report = new LabReport({
+
+            patientId,
+            appointmentId,
+            testName,
+            testDate,
+            result,
+            status: "Completed"
+
+        });
+
+        await report.save();
+
+        res.status(201).json({
+
+            message: "Lab report added successfully",
+
+            report: report
+
+        });
+
+    } catch (error) {
+
+        console.error("Add Lab Report Error:", error);
+
+        res.status(500).json({
+
+            message: "Unable to add lab report",
+
+            error: error.message
+
+        });
+
+    }
+
+});
+// =====================================================
 // SERVER
 // =====================================================
 
 const PORT =
     process.env.PORT || 5000;
-
 // =====================================================
 // DOCTOR - SAVE PRESCRIPTION
 // =====================================================
@@ -1847,39 +1913,6 @@ app.get("/api/patients/:patientId/lab-reports", async (req, res) => {
     }
 
 });
-
-// =====================================================
-// ADMIN - GET ALL LAB REPORTS
-// =====================================================
-
-app.get("/api/admin/lab-reports", async (req, res) => {
-
-    try {
-
-        const reports = await LabReport.find()
-            .populate("patientId", "name email")
-            .populate("appointmentId", "patientName doctor date time")
-            .sort({
-                createdAt: -1
-            });
-
-        res.status(200).json({
-            reports: reports
-        });
-
-    } catch (error) {
-
-        console.error("Lab Reports Error:", error);
-
-        res.status(500).json({
-            message: "Unable to load lab reports",
-            error: error.message
-        });
-
-    }
-
-});
-
 // =====================================================
 // DOCTOR - ADD LAB REPORT
 // =====================================================

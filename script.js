@@ -1,7 +1,7 @@
 // Online Hospital Management System
 // Main JavaScript File
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://hospital-management-api-2fqs.onrender.com";
 
 console.log("MediCare Hospital Website Loaded Successfully!");
 

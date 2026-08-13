@@ -568,7 +568,7 @@ async function loadDoctors() {
     try {
 
         const response =
-            await fetch("http://localhost:5000/api/doctors");
+            await fetch("https://hospital-management-api-2fqs.onrender.com/api/doctors");
 
         const data =
             await response.json();

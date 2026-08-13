@@ -44,7 +44,15 @@ const doctors = [
         phone: "9876543215",
         department: "Gynecology",
         specialization: "Gynecologist"
-    }
+    },
+     {
+        name: "Dr. Rahul Kumar",
+        email: "doctor@medicare.com",
+        password: "Rahul@123",
+        phone: "9876543210",
+        department: "Cardiology",
+        specialization: "Cardiologist"
+    },
 ];
 
 async function createDoctors() {

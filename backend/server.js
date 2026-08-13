@@ -19,7 +19,7 @@ const app = express();
 // =====================================================
 
 app.use(cors({
-    origin: "https://medicare-hospit.netlify.app/",
+    origin: "https://medicare-hospit.netlify.app",
     credentials: true
 }));
 app.use(express.json());

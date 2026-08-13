@@ -489,15 +489,16 @@ app.post("/api/doctors/login", async (req, res) => {
 
             doctor: {
 
-                id: doctor._id,
-                name: doctor.name,
-                email: doctor.email,
-                phone: doctor.phone,
-                department: doctor.department,
-                specialization:
-                    doctor.specialization
+    id: doctor._id,
+    name: doctor.name,
+    email: doctor.email,
+    phone: doctor.phone,
+    department: doctor.department,
+    specialization: doctor.specialization,
 
-            }
+    experience: doctor.experience,
+    availability: doctor.availability
+  }
 
         });
 

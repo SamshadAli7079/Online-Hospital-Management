@@ -731,22 +731,39 @@ form.addEventListener(
         // CHECK PATIENT LOGIN
         // =================================================
 
-        const patientId =
-            localStorage.getItem("patientId");
+const storedPatient =
+    localStorage.getItem("patient");
 
-        const storedPatientName =
-            localStorage.getItem("patientName");
+if (!storedPatient) {
 
+    alert("Please login first.");
 
-        if (!patientId) {
+    window.location.href =
+        "login.html";
 
-            alert("Please login first.");
+    return;
+}
 
-            window.location.href =
-                "login.html";
+const patient =
+    JSON.parse(storedPatient);
 
-            return;
-        }
+const patientId =
+    patient._id;
+
+const storedPatientName =
+    patient.name;
+    
+    document.getElementById("patientName").value =
+    patient.name || "";
+
+document.getElementById("phone").value =
+    patient.phone || "";
+
+document.getElementById("email").value =
+    patient.email || "";
+
+document.getElementById("age").value =
+    patient.age || "";
 
 
         // =================================================

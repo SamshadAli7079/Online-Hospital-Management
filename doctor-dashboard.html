@@ -584,6 +584,29 @@
             </span>
 
         </div>
+        <div class="profile-item">
+
+    <strong>
+        Experience
+    </strong>
+
+    <span id="profileExperience">
+        Loading...
+    </span>
+
+</div>
+
+<div class="profile-item">
+
+    <strong>
+        Availability
+    </strong>
+
+    <span id="profileAvailability">
+        Loading...
+    </span>
+
+</div>
 
     </div>
 
@@ -704,6 +727,10 @@
 
 <script>
 
+const API_BASE_URL =
+    "https://hospital-management-api-2fqs.onrender.com";
+
+
 /* =========================================
    GET LOGGED-IN DOCTOR
 ========================================= */
@@ -759,6 +786,16 @@ document.getElementById("profilePhone")
 document.getElementById("profileEmail")
     .textContent =
     doctorData.email || "-";
+    document.getElementById("profileExperience")
+    .textContent =
+    doctorData.experience !== undefined &&
+    doctorData.experience !== null
+        ? `${doctorData.experience} Years`
+        : "-";
+
+document.getElementById("profileAvailability")
+    .textContent =
+    doctorData.availability || "-";
 
 
 /* =========================================
@@ -801,7 +838,7 @@ async function loadDoctorAppointments() {
 
         const response =
             await fetch(
-                `http://localhost:5000/api/doctors/${doctorData.id}/appointments`
+                `${API_BASE_URL}/api/doctors/${doctorData.id}/appointments`
             );
 
 
@@ -817,7 +854,6 @@ async function loadDoctorAppointments() {
             );
 
         }
-
 
         const appointments =
             data.appointments || [];
@@ -1159,7 +1195,7 @@ async function updateAppointment(
 
         const response =
             await fetch(
-                `http://localhost:5000/api/appointments/${appointmentId}/status`,
+                `${API_BASE_URL}/api/appointments/${appointmentId}/status`,
                 {
                     method: "PATCH",
 
@@ -1221,7 +1257,7 @@ async function viewPatient(appointmentId) {
     try {
 
         const response = await fetch(
-            `http://localhost:5000/api/appointments/details/${appointmentId}`
+            `${API_BASE_URL}/api/appointments/details/${appointmentId}`
         );
 
         const data = await response.json();
@@ -1305,7 +1341,7 @@ async function addPrescription(appointmentId) {
     try {
 
         const response = await fetch(
-            `http://localhost:5000/api/appointments/${appointmentId}/prescription`,
+            `${API_BASE_URL}/api/appointments/${appointmentId}/prescription`,
             {
 
                 method: "PATCH",
@@ -1422,7 +1458,7 @@ async function addLabReport(appointmentId, patientId) {
     try {
 
         const response = await fetch(
-            `http://localhost:5000/api/lab-reports`,
+            `${API_BASE_URL}/api/lab-reports`,
             {
 
                 method: "POST",

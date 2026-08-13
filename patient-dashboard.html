@@ -1057,7 +1057,7 @@
 
                 const response =
                     await fetch(
-                        `http://localhost:5000/api/patients/${patient.id}/appointments`
+                        `https://hospital-management-api-2fqs.onrender.com/api/patients/${patient.id}/appointments`
                     );
 
 
@@ -1495,7 +1495,7 @@ function showPrescriptions(appointments) {
 
                 const response =
                     await fetch(
-                        `http://localhost:5000/api/patients/appointments/${appointmentId}/cancel`,
+                        `https://hospital-management-api-2fqs.onrender.com/api/patients/appointments/${appointmentId}/cancel`,
                         {
                             method: "PUT"
                         }
@@ -1553,7 +1553,7 @@ async function viewAppointmentDetails(appointmentId) {
     try {
 
         const response = await fetch(
-            `http://localhost:5000/api/appointments/details/${appointmentId}`
+            `https://hospital-management-api-2fqs.onrender.com/api/appointments/details/${appointmentId}`
         );
 
         const data = await response.json();
@@ -1648,7 +1648,7 @@ async function loadLabReports() {
 
         const response =
             await fetch(
-                `http://localhost:5000/api/patients/${patient.id}/lab-reports`
+                `https://hospital-management-api-2fqs.onrender.com/api/patients/${patient.id}/lab-reports`
             );
 
         const data =

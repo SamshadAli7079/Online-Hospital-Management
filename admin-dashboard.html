@@ -671,34 +671,7 @@
     onclick="openDoctorForm()">
     ➕ Add Doctor
 </button>
-<div id="addDoctorForm" style="display:block; margin-top:20px; padding:20px; background:#f7fcfd; border-radius:10px;">
 
-    <h3>➕ Add New Doctor</h3>
-
-    <input type="text" id="doctorName" placeholder="Doctor Name">
-
-    <input type="email" id="doctorEmail" placeholder="Email">
-
-    <input type="text" id="doctorPhone" placeholder="Phone">
-
-    <input type="password" id="doctorPassword" placeholder="Password">
-
-    <input type="text" id="doctorDepartment" placeholder="Department">
-
-    <input type="text" id="doctorSpecialization" placeholder="Specialization">
-
-    <input type="number" id="doctorExperience" placeholder="Experience">
-
-    <br><br>
-
-<button
-    type="button"
-    class="confirm-btn"
-    onclick="addDoctor()">
-    ✅ Save Doctor
-</button>
-
-</div>
 <div id="addDoctorForm" style="display:none; margin-top:20px; padding:20px; background:#f7fcfd; border-radius:10px;">
 
     <h3 style="color:#075e6e; margin-bottom:15px;">
@@ -901,7 +874,9 @@
         // =========================================
         // CHECK ADMIN LOGIN
         // =========================================
-
+       const API_BASE_URL =
+    "https://hospital-management-api-2fqs.onrender.com";
+    
         const adminData =
             localStorage.getItem("admin");
 
@@ -985,7 +960,7 @@
 
                 const response =
                     await fetch(
-                            "https://hospital-management-api-2fqs.onrender.com/api/doctors"
+                            `${API_BASE_URL}/api/admin/appointments`
                     );
 
 
@@ -1006,52 +981,7 @@
                 const appointments =
                     data.appointments || [];
 
-// =========================================
-// VIEW PRESCRIPTION
-// =========================================
 
-async function viewPrescription(appointmentId) {
-
-    try {
-
-        const response = await fetch(
-            `http://localhost:5000/api/admin/appointments/${appointmentId}/prescription`
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-
-            alert(
-                data.message || "Unable to load prescription"
-            );
-
-            return;
-        }
-
-        if (!data.prescription) {
-
-            alert("No prescription available.");
-
-            return;
-        }
-
-        alert(
-            "💊 Prescription\n\n" +
-            data.prescription
-        );
-
-    } catch (error) {
-
-        console.error("Prescription Error:", error);
-
-        alert(
-            "Unable to load prescription from backend."
-        );
-
-    }
-
-}
                 // =================================
                 // TOTAL APPOINTMENTS
                 // =================================
@@ -1340,7 +1270,7 @@ async function viewPrescription(appointmentId) {
 
                 const response =
                     await fetch(
-                        `http://localhost:5000/api/admin/appointments/${appointmentId}`,
+                        `https://hospital-management-api-2fqs.onrender.com/api/admin/appointments/${appointmentId}`,
                         {
 
                             method: "PUT",
@@ -1435,7 +1365,7 @@ async function loadDoctors() {
 
         const response =
             await fetch(
-                "http://localhost:5000/api/doctors"
+                "https://hospital-management-api-2fqs.onrender.com/api/doctors"
             );
 
 
@@ -1650,7 +1580,7 @@ async function editDoctor(doctorId) {
 
         const response =
             await fetch(
-                `http://localhost:5000/api/doctors/${doctorId}`,
+                `https://hospital-management-api-2fqs.onrender.com/api/doctors/${doctorId}`,
                 {
 
                     method: "PATCH",
@@ -1742,7 +1672,7 @@ async function deleteDoctor(
 
         const response =
             await fetch(
-                `http://localhost:5000/api/doctors/${doctorId}`,
+                `https://hospital-management-api-2fqs.onrender.com/api/doctors/${doctorId}`,
                 {
 
                     method: "DELETE"
@@ -1824,7 +1754,7 @@ async function deleteDoctor(
 
                 const response =
                     await fetch(
-                        "http://localhost:5000/api/admin/patients"
+                        "https://hospital-management-api-2fqs.onrender.com/api/admin/patients"
                     );
 
 
@@ -2025,7 +1955,7 @@ async function addDoctor() {
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/doctors",
+            "https://hospital-management-api-2fqs.onrender.com/api/doctors",
             {
 
                 method: "POST",
@@ -2083,50 +2013,7 @@ async function addDoctor() {
     }
 
 }
-// =========================================
-// VIEW PRESCRIPTION
-// =========================================
 
-async function viewPrescription(appointmentId) {
-
-    try {
-
-        const response = await fetch(
-            `http://localhost:5000/api/admin/appointments/${appointmentId}/prescription`
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-
-            alert(data.message || "Unable to load prescription");
-
-            return;
-        }
-
-        if (!data.prescription) {
-
-            alert("💊 No prescription available.");
-
-            return;
-        }
-
-        alert(
-            "💊 PRESCRIPTION\n\n" +
-            data.prescription
-        );
-
-    } catch (error) {
-
-        console.error("Prescription Error:", error);
-
-        alert(
-            "❌ Unable to load prescription from backend."
-        );
-
-    }
-
-}
 // =========================================
 // ADMIN - VIEW PRESCRIPTION
 // =========================================
@@ -2136,7 +2023,7 @@ async function viewPrescription(appointmentId) {
     try {
 
         const response = await fetch(
-            `http://localhost:5000/api/admin/appointments/${appointmentId}/prescription`
+            `https://hospital-management-api-2fqs.onrender.com/api/admin/appointments/${appointmentId}/prescription`
         );
 
         const data = await response.json();
@@ -2183,7 +2070,9 @@ async function loadLabAppointments() {
 
     try {
 
-        const response = await fetch("http://localhost:5000/api/admin/appointments");
+        const response = await fetch(
+            "https://hospital-management-api-2fqs.onrender.com/api/admin/appointments"
+        );
 
         const data = await response.json();
 
@@ -2229,7 +2118,9 @@ async function addLabReport() {
     const result =
         document.getElementById("testResult").value;
 
-    const response = await fetch("http://localhost:5000/api/lab-reports", {
+    const response = await fetch(
+        "https://hospital-management-api-2fqs.onrender.com/api/lab-reports",
+         {
 
         method: "POST",
 
@@ -2247,7 +2138,8 @@ async function addLabReport() {
 
         })
 
-    });
+    }
+);
 
     const data = await response.json();
 

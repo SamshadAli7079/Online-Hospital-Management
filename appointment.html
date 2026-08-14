@@ -824,21 +824,31 @@ document.getElementById("age").value =
         // VALIDATION
         // =================================================
 
-        if (
-            !patientName ||
-            !phone ||
-            !email ||
-            !age ||
-            !department ||
-            !doctor ||
-            !date ||
-            !time
-        ) {
+console.log("===== APPOINTMENT DEBUG =====");
+console.log("patientName:", patientName);
+console.log("phone:", phone);
+console.log("email:", email);
+console.log("age:", age);
+console.log("department:", department);
+console.log("doctor:", doctor);
+console.log("date:", date);
+console.log("time:", time);
 
-            alert("Please fill all required fields.");
+if (
+    !patientName ||
+    !phone ||
+    !email ||
+    !age ||
+    !department ||
+    !doctor ||
+    !date ||
+    !time
+) {
 
-            return;
-        }
+    alert("Please fill all required fields.");
+
+    return;
+}
 
 
         // =================================================

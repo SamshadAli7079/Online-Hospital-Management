@@ -1904,14 +1904,44 @@ async function deleteDoctor(
         }
 
 
-        // =========================================
-        // START DASHBOARD
-        // =========================================
+// =========================================
+// START DASHBOARD
+// =========================================
 
-        loadAppointments();
+loadAppointments();
+loadPatients();
+loadDoctors();
+loadLabAppointments();
 
-        loadPatients();
-        loadDoctors();
+
+// =========================================
+// OPEN ADD DOCTOR FORM
+// =========================================
+
+function openDoctorForm() {
+
+    const form = document.getElementById("addDoctorForm");
+
+    if (form) {
+        form.style.display = "block";
+    }
+
+}
+
+
+// =========================================
+// CLOSE ADD DOCTOR FORM
+// =========================================
+
+function closeDoctorForm() {
+
+    const form = document.getElementById("addDoctorForm");
+
+    if (form) {
+        form.style.display = "none";
+    }
+
+}      
 
 async function addDoctor() {
 

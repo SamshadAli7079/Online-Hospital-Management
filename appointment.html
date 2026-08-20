@@ -570,13 +570,14 @@
     </footer>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
-  <script>
-    // =====================================================
+<script>
+
+// =====================================================
 // API CONFIGURATION
 // =====================================================
 
-const API_BASE_URL = "https://hospital-management-api-2fqs.onrender.com";
+const API_BASE_URL =
+    "https://hospital-management-api-2fqs.onrender.com";
 
 
 // =====================================================
@@ -587,12 +588,13 @@ let allDoctors = [];
 
 
 // =====================================================
-// LOAD DOCTORS FROM RENDER BACKEND
+// LOAD DOCTORS
 // =====================================================
 
 async function loadDoctors() {
 
-    const doctorSelect = document.getElementById("doctor");
+    const doctorSelect =
+        document.getElementById("doctor");
 
     if (!doctorSelect) return;
 
@@ -602,15 +604,20 @@ async function loadDoctors() {
             `${API_BASE_URL}/api/doctors`
         );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!response.ok) {
+
             throw new Error(
-                data.message || "Unable to load doctors"
+                data.message ||
+                "Unable to load doctors"
             );
+
         }
 
-        allDoctors = data.doctors || [];
+        allDoctors =
+            data.doctors || [];
 
         doctorSelect.innerHTML = `
             <option value="">
@@ -623,7 +630,9 @@ async function loadDoctors() {
             allDoctors
         );
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(
             "Doctor loading error:",
@@ -635,7 +644,9 @@ async function loadDoctors() {
                 Unable to load doctors
             </option>
         `;
+
     }
+
 }
 
 
@@ -645,61 +656,80 @@ async function loadDoctors() {
 
 document
     .getElementById("department")
-    .addEventListener("change", function () {
+    .addEventListener(
+        "change",
+        function () {
 
-        const selectedDepartment =
-            this.value.trim().toLowerCase();
+            const selectedDepartment =
+                this.value
+                    .trim()
+                    .toLowerCase();
 
-        const doctorSelect =
-            document.getElementById("doctor");
-
-        doctorSelect.innerHTML = `
-            <option value="">
-                -- Select Doctor --
-            </option>
-        `;
-
-        if (!selectedDepartment) {
-            return;
-        }
-
-        const filteredDoctors =
-            allDoctors.filter(function (doctor) {
-
-                return (
-                    doctor.department &&
-                    doctor.department.trim().toLowerCase() ===
-                    selectedDepartment
-                );
-
-            });
-
-
-        filteredDoctors.forEach(function (doctor) {
-
-            const option =
-                document.createElement("option");
-
-            option.value = doctor._id;
-
-            option.textContent =
-                `${doctor.name} - ${doctor.specialization}`;
-
-            doctorSelect.appendChild(option);
-
-        });
-
-
-        if (filteredDoctors.length === 0) {
+            const doctorSelect =
+                document.getElementById("doctor");
 
             doctorSelect.innerHTML = `
                 <option value="">
-                    No doctor available
+                    -- Select Doctor --
                 </option>
             `;
-        }
 
-    });
+            if (!selectedDepartment) {
+                return;
+            }
+
+            const filteredDoctors =
+                allDoctors.filter(
+                    function (doctor) {
+
+                        return (
+                            doctor.department &&
+                            doctor.department
+                                .trim()
+                                .toLowerCase() ===
+                            selectedDepartment
+                        );
+
+                    }
+                );
+
+
+            filteredDoctors.forEach(
+                function (doctor) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+                    option.value =
+                        doctor._id;
+
+                    option.textContent =
+                        `${doctor.name} - ${doctor.specialization}`;
+
+                    doctorSelect.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+
+            if (
+                filteredDoctors.length === 0
+            ) {
+
+                doctorSelect.innerHTML = `
+                    <option value="">
+                        No doctor available
+                    </option>
+                `;
+
+            }
+
+        }
+    );
 
 
 // =====================================================
@@ -714,15 +744,18 @@ loadDoctors();
 // =====================================================
 
 const form =
-    document.getElementById("appointmentForm");
+    document.getElementById(
+        "appointmentForm"
+    );
 
-const successMessage =
-    document.getElementById("successMessage");
 
+// =====================================================
+// FORM SUBMIT
+// =====================================================
 
 form.addEventListener(
     "submit",
-    async function(event) {
+    async function (event) {
 
         event.preventDefault();
 
@@ -731,41 +764,108 @@ form.addEventListener(
         // CHECK PATIENT LOGIN
         // =================================================
 
-const storedPatient =
-    localStorage.getItem("patient");
+        const storedPatient =
+            localStorage.getItem(
+                "patient"
+            );
 
-if (!storedPatient) {
 
-    alert("Please login first.");
+        if (!storedPatient) {
 
-    window.location.href =
-        "login.html";
+            alert(
+                "Please login first."
+            );
 
-    return;
-}
+            window.location.href =
+                "login.html";
 
-const patient =
-    JSON.parse(storedPatient);
+            return;
 
-const patientId =
-    patient.id;
-    console.log("LOGGED PATIENT:", patient);
-console.log("PATIENT ID:", patientId);
+        }
 
-const storedPatientName =
-    patient.name;
-    
-    document.getElementById("patientName").value =
-    patient.name || "";
 
-document.getElementById("phone").value =
-    patient.phone || "";
+        let patient;
 
-document.getElementById("email").value =
-    patient.email || "";
+        try {
 
-document.getElementById("age").value =
-    patient.age || "";
+            patient =
+                JSON.parse(
+                    storedPatient
+                );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Patient data error:",
+                error
+            );
+
+            alert(
+                "Patient login data is invalid. Please login again."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        const patientId =
+            patient.id;
+
+
+        if (!patientId) {
+
+            alert(
+                "Patient ID not found. Please login again."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        console.log(
+            "LOGGED PATIENT:",
+            patient
+        );
+
+        console.log(
+            "PATIENT ID:",
+            patientId
+        );
+
+
+        // =================================================
+        // FILL PATIENT INFORMATION
+        // =================================================
+
+        document.getElementById(
+            "patientName"
+        ).value =
+            patient.name || "";
+
+        document.getElementById(
+            "phone"
+        ).value =
+            patient.phone || "";
+
+        document.getElementById(
+            "email"
+        ).value =
+            patient.email || "";
+
+        document.getElementById(
+            "age"
+        ).value =
+            patient.age || "";
 
 
         // =================================================
@@ -774,50 +874,76 @@ document.getElementById("age").value =
 
         const patientName =
             document
-                .getElementById("patientName")
+                .getElementById(
+                    "patientName"
+                )
                 .value
                 .trim();
+
 
         const phone =
             document
-                .getElementById("phone")
+                .getElementById(
+                    "phone"
+                )
                 .value
                 .trim();
+
 
         const email =
             document
-                .getElementById("email")
+                .getElementById(
+                    "email"
+                )
                 .value
                 .trim();
 
+
         const age =
             document
-                .getElementById("age")
+                .getElementById(
+                    "age"
+                )
                 .value;
+
 
         const department =
             document
-                .getElementById("department")
+                .getElementById(
+                    "department"
+                )
                 .value;
+
 
         const doctor =
             document
-                .getElementById("doctor")
+                .getElementById(
+                    "doctor"
+                )
                 .value;
+
 
         const date =
             document
-                .getElementById("date")
+                .getElementById(
+                    "date"
+                )
                 .value;
+
 
         const time =
             document
-                .getElementById("time")
+                .getElementById(
+                    "time"
+                )
                 .value;
+
 
         const problem =
             document
-                .getElementById("problem")
+                .getElementById(
+                    "problem"
+                )
                 .value
                 .trim();
 
@@ -826,85 +952,142 @@ document.getElementById("age").value =
         // VALIDATION
         // =================================================
 
-console.log("===== APPOINTMENT DEBUG =====");
-console.log("patientName:", patientName);
-console.log("phone:", phone);
-console.log("email:", email);
-console.log("age:", age);
-console.log("department:", department);
-console.log("doctor:", doctor);
-console.log("date:", date);
-console.log("time:", time);
+        console.log(
+            "===== APPOINTMENT DEBUG ====="
+        );
 
-if (
-    !patientName ||
-    !phone ||
-    !email ||
-    !age ||
-    !department ||
-    !doctor ||
-    !date ||
-    !time
-) {
+        console.log(
+            "patientName:",
+            patientName
+        );
 
-    alert("Please fill all required fields.");
+        console.log(
+            "phone:",
+            phone
+        );
 
-    return;
-}
+        console.log(
+            "email:",
+            email
+        );
+
+        console.log(
+            "age:",
+            age
+        );
+
+        console.log(
+            "department:",
+            department
+        );
+
+        console.log(
+            "doctor:",
+            doctor
+        );
+
+        console.log(
+            "date:",
+            date
+        );
+
+        console.log(
+            "time:",
+            time
+        );
+
+
+        if (
+            !patientName ||
+            !phone ||
+            !email ||
+            !age ||
+            !department ||
+            !doctor ||
+            !date ||
+            !time
+        ) {
+
+            alert(
+                "Please fill all required fields."
+            );
+
+            return;
+
+        }
 
 
         // =================================================
-        // SEND APPOINTMENT TO RENDER BACKEND
+        // DISABLE BUTTON
+        // =================================================
+
+        const submitButton =
+            form.querySelector(
+                "button[type='submit']"
+            );
+
+
+        submitButton.disabled =
+            true;
+
+        submitButton.textContent =
+            "Creating Payment Request...";
+
+
+        // =================================================
+        // CREATE PENDING APPOINTMENT
         // =================================================
 
         try {
 
             const response =
                 await fetch(
-                    `${API_BASE_URL}/api/appointments`,
+                    `${API_BASE_URL}/api/appointments/pending`,
                     {
 
                         method: "POST",
 
                         headers: {
+
                             "Content-Type":
                                 "application/json"
+
                         },
 
-                        body: JSON.stringify({
+                        body:
+                            JSON.stringify({
 
-                            patientId:
-                                patientId,
+                                patientId:
+                                    patientId,
 
-                            patientName:
-                                patientName ||
-                                storedPatientName,
+                                patientName:
+                                    patientName,
 
-                            phone:
-                                phone,
+                                phone:
+                                    phone,
 
-                            email:
-                                email,
+                                email:
+                                    email,
 
-                            age:
-                                parseInt(age),
+                                age:
+                                    parseInt(age),
 
-                            department:
-                                department,
+                                department:
+                                    department,
 
-                            doctor:
-                                doctor,
+                                doctor:
+                                    doctor,
 
-                            date:
-                                date,
+                                date:
+                                    date,
 
-                            time:
-                                time,
+                                time:
+                                    time,
 
-                            problem:
-                                problem
+                                problem:
+                                    problem
 
-                        })
+                            })
 
                     }
                 );
@@ -914,45 +1097,96 @@ if (
                 await response.json();
 
 
-            if (response.ok) {
+            // =================================================
+            // BACKEND ERROR
+            // =================================================
 
-                successMessage.textContent =
-                    "✅ Appointment booked successfully!";
-
-                successMessage.style.display =
-                    "block";
-
-                form.reset();
-
-                // Reload doctor data after form reset
-                loadDoctors();
-
-            } else {
+            if (!response.ok) {
 
                 alert(
                     data.message ||
-                    "Appointment booking failed!"
+                    "Unable to create appointment."
                 );
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "📅 Book Appointment";
+
+                return;
 
             }
 
 
-        } catch (error) {
+            // =================================================
+            // GET APPOINTMENT ID
+            // =================================================
+
+            const appointmentId =
+                data.appointmentId;
+
+
+            if (!appointmentId) {
+
+                alert(
+                    "Appointment ID was not received from server."
+                );
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "📅 Book Appointment";
+
+                return;
+
+            }
+
+
+            console.log(
+                "Pending Appointment ID:",
+                appointmentId
+            );
+
+
+            // =================================================
+            // GO TO PAYMENT PAGE
+            // =================================================
+
+            window.location.href =
+                `payment.html?appointmentId=${encodeURIComponent(
+                    appointmentId
+                )}`;
+
+        }
+
+
+        catch (error) {
 
             console.error(
-                "Appointment Error:",
+                "Pending Appointment Error:",
                 error
             );
+
 
             alert(
                 "Backend server se connection nahi ho raha hai."
             );
 
+
+            submitButton.disabled =
+                false;
+
+            submitButton.textContent =
+                "📅 Book Appointment";
+
         }
 
     }
 );
-  </script>
+
+</script>
 
 
 </body>

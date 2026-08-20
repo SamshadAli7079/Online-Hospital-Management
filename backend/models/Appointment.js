@@ -32,8 +32,45 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         default: "Pending"
     },
+    // =====================================================
+// PAYMENT DETAILS
+// =====================================================
 
-    // NEW
+paymentStatus: {
+    type: String,
+    enum: ["Pending", "Paid", "Failed"],
+    default: "Pending"
+},
+
+paymentId: {
+    type: String,
+    default: ""
+},
+paymentAmount: {
+    type: Number,
+    default: 500
+},
+
+    // ================= PAYMENT =================
+
+    paymentStatus: {
+        type: String,
+        enum: ["Pending", "Paid", "Failed"],
+        default: "Pending"
+    },
+
+    paymentAmount: {
+        type: Number,
+        default: 500
+    },
+
+    paymentId: {
+        type: String,
+        default: ""
+    },
+
+    // ================= PRESCRIPTION =================
+
     prescription: {
         type: String,
         default: ""

@@ -796,6 +796,268 @@ app.delete("/api/doctors/:doctorId", async (req, res) => {
 
 });
 
+// =====================================================
+// CREATE PENDING APPOINTMENT FOR PAYMENT
+// =====================================================
+
+app.post("/api/appointments/pending", async (req, res) => {
+
+    try {
+
+        const {
+            patientId,
+            patientName,
+            phone,
+            email,
+            age,
+            department,
+            doctor,
+            date,
+            time,
+            problem
+        } = req.body;
+
+
+        // =================================================
+        // VALIDATION
+        // =================================================
+
+        if (
+            !patientId ||
+            !patientName ||
+            !phone ||
+            !email ||
+            !age ||
+            !department ||
+            !doctor ||
+            !date ||
+            !time
+        ) {
+
+            return res.status(400).json({
+
+                message:
+                    "Please fill all required fields"
+
+            });
+
+        }
+
+
+        // =================================================
+        // CHECK DOCTOR
+        // =================================================
+
+        const doctorExists =
+            await Doctor.findById(doctor);
+
+
+        if (!doctorExists) {
+
+            return res.status(404).json({
+
+                message:
+                    "Doctor not found"
+
+            });
+
+        }
+
+
+        // =================================================
+        // CREATE PENDING APPOINTMENT
+        // =================================================
+
+        const appointment =
+            new Appointment({
+
+                patientId,
+
+                patientName,
+
+                phone,
+
+                email,
+
+                age,
+
+                department,
+
+                doctor,
+
+                date,
+
+                time,
+
+                problem,
+
+                status: "Pending",
+
+                paymentStatus: "Pending",
+
+                paymentAmount: 500,
+
+                paymentId: ""
+
+            });
+
+
+        await appointment.save();
+
+
+        // =================================================
+        // RESPONSE
+        // =================================================
+
+        res.status(201).json({
+
+            message:
+                "Appointment created. Payment pending.",
+
+            appointmentId:
+                appointment._id,
+
+            paymentAmount:
+                appointment.paymentAmount,
+
+            paymentStatus:
+                appointment.paymentStatus
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+
+            message:
+                "Server error",
+
+            error:
+                error.message
+
+        });
+
+    }
+
+});
+
+// =====================================================
+// VERIFY DEMO PAYMENT
+// =====================================================
+
+app.post("/api/payment/verify", async (req, res) => {
+
+    try {
+
+        const {
+            appointmentId,
+            paymentId
+        } = req.body;
+
+
+        // =================================================
+        // VALIDATION
+        // =================================================
+
+        if (!appointmentId || !paymentId) {
+
+            return res.status(400).json({
+
+                message:
+                    "Appointment ID and Payment ID are required"
+
+            });
+
+        }
+
+
+        // =================================================
+        // FIND APPOINTMENT
+        // =================================================
+
+        const appointment =
+            await Appointment.findById(appointmentId);
+
+
+        if (!appointment) {
+
+            return res.status(404).json({
+
+                message:
+                    "Appointment not found"
+
+            });
+
+        }
+
+
+        // =================================================
+        // CHECK PAYMENT STATUS
+        // =================================================
+
+        if (appointment.paymentStatus === "Paid") {
+
+            return res.status(400).json({
+
+                message:
+                    "Payment already completed"
+
+            });
+
+        }
+
+
+        // =================================================
+        // UPDATE PAYMENT
+        // =================================================
+
+        appointment.paymentStatus = "Paid";
+
+        appointment.paymentId = paymentId;
+
+        appointment.status = "Confirmed";
+
+
+        await appointment.save();
+
+
+        // =================================================
+        // SUCCESS RESPONSE
+        // =================================================
+
+        res.status(200).json({
+
+            message:
+                "Payment successful. Appointment confirmed.",
+
+            appointment:
+                appointment
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+
+            message:
+                "Payment verification failed",
+
+            error:
+                error.message
+
+        });
+
+    }
+
+});
 
 // =====================================================
 // APPOINTMENT BOOKING API
@@ -907,6 +1169,61 @@ app.post("/api/appointments", async (req, res) => {
 
 });
 
+// =====================================================
+// GET APPOINTMENT BY ID
+// =====================================================
+
+app.get("/api/appointments/single/:id", async (req, res) => {
+
+    try {
+
+        const appointment =
+            await Appointment
+                .findById(req.params.id)
+                .populate(
+                    "doctor",
+                    "name email phone department specialization"
+                );
+
+
+        if (!appointment) {
+
+            return res.status(404).json({
+
+                message:
+                    "Appointment not found"
+
+            });
+
+        }
+
+
+        res.status(200).json({
+
+            appointment:
+                appointment
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+
+            message:
+                "Unable to load appointment",
+
+            error:
+                error.message
+
+        });
+
+    }
+
+});
 
 // =====================================================
 // GET ALL APPOINTMENTS

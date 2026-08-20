@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment - MediCare Hospital</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f9fc;
+            color: #222;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #0b7285;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 7%;
+        }
+
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #d9faff;
+        }
+
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+
+        /* ================= PAYMENT SECTION ================= */
+
+        .payment-section {
+            min-height: 80vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 50px 20px;
+        }
+
+
+        .payment-container {
+            width: 100%;
+
+            max-width: 550px;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.09);
+
+            text-align: center;
+        }
+
+
+        .payment-container h1 {
+            color: #075e6e;
+
+            margin-bottom: 10px;
+        }
+
+
+        .payment-container p {
+            color: #666;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* ================= APPOINTMENT INFO ================= */
+
+        .appointment-info {
+            background: #f5f9fc;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            text-align: left;
+        }
+
+
+        .appointment-info div {
+            margin-bottom: 10px;
+        }
+
+
+        .appointment-info strong {
+            color: #075e6e;
+        }
+
+
+        /* ================= PAYMENT AMOUNT ================= */
+
+        .amount-box {
+            border: 2px solid #0b7285;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .amount-box span {
+            display: block;
+
+            color: #666;
+
+            margin-bottom: 8px;
+        }
+
+
+        .amount {
+            font-size: 35px;
+
+            font-weight: bold;
+
+            color: #0b7285;
+        }
+
+
+        /* ================= PAY BUTTON ================= */
+
+        .pay-btn {
+            width: 100%;
+
+            padding: 15px;
+
+            background: #0b7285;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .pay-btn:hover {
+            background: #075e6e;
+        }
+
+
+        /* ================= SUCCESS ================= */
+
+        .success-box {
+            display: none;
+
+            background: #e7f8ed;
+
+            color: #16803a;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-top: 20px;
+        }
+
+
+        .success-box h2 {
+            margin-bottom: 10px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #063f4a;
+
+            color: white;
+
+            padding: 35px 20px;
+
+            text-align: center;
+        }
+
+
+        footer h3 {
+            margin-bottom: 10px;
+        }
+
+
+        footer p {
+            color: #d7eef1;
+
+            margin: 6px 0;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            nav ul {
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+
+            .payment-container {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+            🏥 MediCare <span>Hospital</span>
+        </div>
+
+
+        <ul>
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="doctors.html">
+                    Doctors
+                </a>
+            </li>
+
+            <li>
+                <a href="appointment.html">
+                    Appointment
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ================= PAYMENT ================= -->
+
+    <section class="payment-section">
+
+        <div class="payment-container">
+
+
+            <h1>
+                💳 Appointment Payment
+            </h1>
+
+
+            <p>
+                Complete your payment to confirm your appointment.
+            </p>
+
+
+            <!-- APPOINTMENT INFORMATION -->
+
+            <div
+                class="appointment-info"
+                id="appointmentInfo"
+            >
+
+                <div>
+                    Patient:
+                    <strong id="patientName">
+                        Loading...
+                    </strong>
+                </div>
+
+
+                <div>
+                    Doctor:
+                    <strong id="doctorName">
+                        Loading...
+                    </strong>
+                </div>
+
+
+                <div>
+                    Department:
+                    <strong id="department">
+                        Loading...
+                    </strong>
+                </div>
+
+
+                <div>
+                    Date:
+                    <strong id="appointmentDate">
+                        Loading...
+                    </strong>
+                </div>
+
+
+                <div>
+                    Time:
+                    <strong id="appointmentTime">
+                        Loading...
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT AMOUNT -->
+
+            <div class="amount-box">
+
+                <span>
+                    Consultation Fee
+                </span>
+
+
+                <div class="amount">
+                    ₹500
+                </div>
+
+            </div>
+
+
+            <!-- PAY BUTTON -->
+
+            <button
+                type="button"
+                class="pay-btn"
+                id="payNowBtn"
+            >
+
+                💳 Pay ₹500
+
+            </button>
+
+
+            <!-- SUCCESS -->
+
+            <div
+                class="success-box"
+                id="successBox"
+            >
+
+                <h2>
+                    ✅ Payment Successful!
+                </h2>
+
+
+                <p>
+                    Your appointment has been confirmed.
+                </p>
+
+
+                <p>
+                    Payment ID:
+                    <strong id="paymentId">
+                    </strong>
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3>
+            🏥 MediCare Hospital
+        </h3>
+
+
+        <p>
+            Online Hospital Management System
+        </p>
+
+
+        <p>
+            © 2026 MediCare Hospital. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+// =====================================================
+// API CONFIGURATION
+// =====================================================
+
+const API_BASE_URL =
+    "https://hospital-management-api-2fqs.onrender.com";
+
+
+// =====================================================
+// GET APPOINTMENT ID FROM URL
+// =====================================================
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const appointmentId =
+    urlParams.get("appointmentId");
+
+
+// =====================================================
+// CHECK APPOINTMENT ID
+// =====================================================
+
+if (!appointmentId) {
+
+    alert(
+        "Appointment information not found."
+    );
+
+    window.location.href =
+        "appointment.html";
+
+}
+
+
+// =====================================================
+// LOAD APPOINTMENT DETAILS
+// =====================================================
+
+async function loadAppointment() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/appointments/single/${appointmentId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Unable to load appointment."
+            );
+
+            window.location.href =
+                "appointment.html";
+
+            return;
+
+        }
+
+
+        const appointment =
+            data.appointment;
+
+
+        // =================================================
+        // DISPLAY PATIENT
+        // =================================================
+
+        document.getElementById(
+            "patientName"
+        ).textContent =
+            appointment.patientName ||
+            "N/A";
+
+
+        // =================================================
+        // DISPLAY DOCTOR
+        // =================================================
+
+        if (
+            appointment.doctor &&
+            appointment.doctor.name
+        ) {
+
+            document.getElementById(
+                "doctorName"
+            ).textContent =
+                appointment.doctor.name;
+
+        }
+
+        else {
+
+            document.getElementById(
+                "doctorName"
+            ).textContent =
+                "Selected Doctor";
+
+        }
+
+
+        // =================================================
+        // DISPLAY DEPARTMENT
+        // =================================================
+
+        document.getElementById(
+            "department"
+        ).textContent =
+            appointment.department ||
+            "N/A";
+
+
+        // =================================================
+        // DISPLAY DATE
+        // =================================================
+
+        document.getElementById(
+            "appointmentDate"
+        ).textContent =
+            appointment.date ||
+            "N/A";
+
+
+        // =================================================
+        // DISPLAY TIME
+        // =================================================
+
+        document.getElementById(
+            "appointmentTime"
+        ).textContent =
+            appointment.time ||
+            "N/A";
+
+
+        console.log(
+            "Appointment loaded:",
+            appointment
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Appointment loading error:",
+            error
+        );
+
+        alert(
+            "Backend server se connection nahi ho raha hai."
+        );
+
+        window.location.href =
+            "appointment.html";
+
+    }
+
+}
+
+
+// =====================================================
+// PAYMENT BUTTON
+// =====================================================
+
+document
+    .getElementById("payNowBtn")
+    .addEventListener(
+        "click",
+        async function () {
+
+
+            // =================================================
+            // CHECK APPOINTMENT ID
+            // =================================================
+
+            if (!appointmentId) {
+
+                alert(
+                    "Appointment ID missing."
+                );
+
+                return;
+
+            }
+
+
+            // =================================================
+            // DISABLE PAYMENT BUTTON
+            // =================================================
+
+            const payButton =
+                document.getElementById(
+                    "payNowBtn"
+                );
+
+
+            payButton.disabled =
+                true;
+
+
+            payButton.textContent =
+                "Processing Payment...";
+
+
+            // =================================================
+            // DEMO PAYMENT ID
+            // =================================================
+
+            const paymentId =
+                "DEMO-" +
+                Date.now();
+
+
+            // =================================================
+            // VERIFY PAYMENT
+            // =================================================
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/api/payment/verify`,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    appointmentId:
+                                        appointmentId,
+
+                                    paymentId:
+                                        paymentId
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // =================================================
+                // PAYMENT FAILED
+                // =================================================
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message ||
+                        "Payment failed."
+                    );
+
+
+                    payButton.disabled =
+                        false;
+
+
+                    payButton.textContent =
+                        "💳 Pay ₹500";
+
+
+                    return;
+
+                }
+
+
+                // =================================================
+                // PAYMENT SUCCESS
+                // =================================================
+
+                payButton.style.display =
+                    "none";
+
+
+                document.getElementById(
+                    "successBox"
+                ).style.display =
+                    "block";
+
+
+                document.getElementById(
+                    "paymentId"
+                ).textContent =
+                    paymentId;
+
+
+                console.log(
+                    "Payment successful:",
+                    data
+                );
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Payment Error:",
+                    error
+                );
+
+
+                alert(
+                    "Backend server se connection nahi ho raha hai."
+                );
+
+
+                payButton.disabled =
+                    false;
+
+
+                payButton.textContent =
+                    "💳 Pay ₹500";
+
+            }
+
+        }
+    );
+
+
+// =====================================================
+// LOAD APPOINTMENT ON PAGE LOAD
+// =====================================================
+
+if (appointmentId) {
+
+    loadAppointment();
+
+}
+
+</script>
+
+
+</body>
+
+</html>

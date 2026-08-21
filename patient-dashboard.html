@@ -841,6 +841,10 @@
 
                             <th>Status</th>
 
+                            <th>Payment</th>
+
+                            <th>Amount</th>
+
                             <th>Action</th>
 
                         </tr>
@@ -852,7 +856,7 @@
                         <tr>
 
                             <td
-                                colspan="6"
+                                colspan="8"
                                 class="empty-message">
 
                                 Loading appointments...
@@ -1157,7 +1161,7 @@
                         <tr>
 
                             <td
-                                colspan="6"
+                                colspan="8"
                                 class="empty-message">
 
                                 📅 No appointments found.
@@ -1308,21 +1312,30 @@
                                 ${appointment.time || "-"}
                             </td>
 
-                            <td>
+<td>
+    <span class="status-badge ${statusClass}">
+        ${status}
+    </span>
+</td>
 
-                                <span
-                                    class="status-badge ${statusClass}">
+<td>
+    ${
+        appointment.paymentStatus === "Paid"
+        ? '<span style="color:#16803a;font-weight:bold;">✅ Paid</span>'
+        : appointment.paymentStatus === "Failed"
+        ? '<span style="color:#dc3545;font-weight:bold;">❌ Failed</span>'
+        : '<span style="color:#856404;font-weight:bold;">⏳ Pending</span>'
+    }
+</td>
 
-                                    ${status}
+<td>
+    ₹${appointment.paymentAmount || 0}
+</td>
 
-                                </span>
-
-                            </td>
-
-                            <td>
-                            ${detailsButton}
-                                ${actionHTML}
-                            </td>
+<td>
+    ${detailsButton}
+    ${actionHTML}
+</td>
 
                         `;
 
@@ -1348,7 +1361,7 @@
                     <tr>
 
                         <td
-                            colspan="6"
+                            colspan="8"
                             class="empty-message"
                             style="color:#dc3545;">
 
@@ -1591,6 +1604,15 @@ async function viewAppointmentDetails(appointmentId) {
             (appointment.time || "-") + "\n" +
             "Status: " +
             (appointment.status || "Pending") + "\n\n" +
+            "PAYMENT DETAILS\n" +
+"Payment Status: " +
+(appointment.paymentStatus || "Pending") + "\n" +
+
+"Payment Amount: ₹" +
+(appointment.paymentAmount || 0) + "\n" +
+
+"Payment ID: " +
+(appointment.paymentId || "Not Paid") + "\n\n" +
 
             "PATIENT PROBLEM\n" +
             (appointment.problem || "Not provided") + "\n\n" +

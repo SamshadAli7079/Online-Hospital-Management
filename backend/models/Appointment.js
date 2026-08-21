@@ -28,30 +28,14 @@ const appointmentSchema = new mongoose.Schema({
     time: String,
     problem: String,
 
+    // ================= APPOINTMENT STATUS =================
+
     status: {
         type: String,
         default: "Pending"
     },
-    // =====================================================
-// PAYMENT DETAILS
-// =====================================================
 
-paymentStatus: {
-    type: String,
-    enum: ["Pending", "Paid", "Failed"],
-    default: "Pending"
-},
-
-paymentId: {
-    type: String,
-    default: ""
-},
-paymentAmount: {
-    type: Number,
-    default: 500
-},
-
-    // ================= PAYMENT =================
+    // ================= PAYMENT DETAILS =================
 
     paymentStatus: {
         type: String,

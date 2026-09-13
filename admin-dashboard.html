@@ -233,6 +233,26 @@
             background: #fde2e2;
             color: #b42318;
         }
+        .paid {
+    background: #dff6e7;
+    color: #16743a;
+}
+
+.unpaid {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.payment-id {
+    font-size: 12px;
+    color: #555;
+    word-break: break-all;
+}
+
+.amount {
+    font-weight: bold;
+    color: #075e6e;
+}
 
 
         /* ================= BUTTONS ================= */
@@ -548,6 +568,17 @@
                             <th>
                                 Status
                             </th>
+                           <th>
+                             Payment Status
+                           </th>
+
+                           <th>
+                              Payment ID
+                           </th>
+
+                           <th>
+                               Amount
+                           </th>
 
                             <th>
                                 Action
@@ -563,7 +594,7 @@
                         <tr>
 
                             <td
-                                colspan="8"
+                                colspan="11"
                                 class="empty-message">
 
                                 Loading appointments...
@@ -780,7 +811,7 @@
                 <tr>
 
                     <td
-                        colspan="8"
+                        colspan="11"
                         class="empty-message">
 
                         Loading doctors...
@@ -943,7 +974,7 @@
                 <tr>
 
                     <td
-                        colspan="8"
+                        colspan="11"
                         class="empty-message">
 
                         Loading appointments...
@@ -1044,7 +1075,7 @@
                         <tr>
 
                             <td
-                                colspan="8"
+                                colspan="11"
                                 class="empty-message">
 
                                 📅 No appointments found.
@@ -1075,6 +1106,15 @@
                         const status =
                             appointment.status ||
                             "Pending";
+                            const paymentStatus = appointment.paymentStatus || "Unpaid";
+const paymentId = appointment.paymentId || "-";
+const paymentAmount = appointment.paymentAmount || 0;
+
+let paymentClass = "unpaid";
+
+if (paymentStatus === "Paid") {
+    paymentClass = "paid";
+}
 
 
                         let statusClass =
@@ -1194,6 +1234,23 @@
                                 </span>
 
                             </td>
+                            <td>
+    <span class="status ${paymentClass}">
+        ${paymentStatus === "Paid" ? "💳 Paid" : "⏳ Unpaid"}
+    </span>
+</td>
+
+<td>
+    <span class="payment-id">
+        ${paymentId}
+    </span>
+</td>
+
+<td>
+    <span class="amount">
+        ₹${paymentAmount}
+    </span>
+</td>
 
 
                             <td>
@@ -1225,7 +1282,7 @@
                     <tr>
 
                         <td
-                            colspan="8"
+                            colspan="11"
                             class="error-message">
 
                             ❌ Unable to load appointments
@@ -1349,7 +1406,7 @@ async function loadDoctors() {
         <tr>
 
             <td
-                colspan="8"
+                colspan="11"
                 class="empty-message">
 
                 Loading doctors...
@@ -1397,7 +1454,7 @@ async function loadDoctors() {
                 <tr>
 
                     <td
-                        colspan="8"
+                        colspan="11"
                         class="empty-message">
 
                         👨‍⚕️ No doctors found.
@@ -1511,7 +1568,7 @@ async function loadDoctors() {
             <tr>
 
                 <td
-                    colspan="8"
+                    colspan="11"
                     class="error-message">
 
                     ❌ Unable to load doctors

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,6 +132,8 @@
             box-shadow: 0 0 0 2px rgba(11,114,133,0.1);
         }
 
+        /* ================= LOGIN BUTTON ================= */
+
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -143,10 +144,16 @@
             font-size: 17px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .login-btn:hover {
             background: #075e6e;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         /* ================= MESSAGE ================= */
@@ -198,6 +205,212 @@
             margin: 6px 0;
         }
 
+
+        /* =====================================================
+           LOGIN ANIMATION OVERLAY
+        ===================================================== */
+
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(245, 249, 252, 0.97);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        .login-overlay.show {
+            display: flex;
+        }
+
+        /* ================= MEDICAL LOADER ================= */
+
+        .medical-loader {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 7px solid #d9faff;
+            border-top-color: #0b7285;
+            border-right-color: #0b7285;
+            animation: rotateLoader 1.1s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .medical-loader::before {
+            content: "✚";
+            width: 58px;
+            height: 58px;
+            background: #0b7285;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 31px;
+            font-weight: bold;
+            animation: pulseMedical 1.2s ease-in-out infinite;
+        }
+
+        @keyframes rotateLoader {
+
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        @keyframes pulseMedical {
+
+            0%, 100% {
+                transform: scale(0.9);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+        }
+
+        /* ================= LOADING TEXT ================= */
+
+        .loading-title {
+            margin-top: 28px;
+            color: #075e6e;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .loading-subtitle {
+            margin-top: 8px;
+            color: #666;
+            font-size: 15px;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            width: 25px;
+            text-align: left;
+        }
+
+        .loading-dots::after {
+            content: "";
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+
+            0% {
+                content: "";
+            }
+
+            25% {
+                content: ".";
+            }
+
+            50% {
+                content: "..";
+            }
+
+            75% {
+                content: "...";
+            }
+
+            100% {
+                content: "";
+            }
+
+        }
+
+
+        /* =====================================================
+           SUCCESS ANIMATION
+        ===================================================== */
+
+        .success-animation {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-animation.show {
+            display: flex;
+        }
+
+        .success-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #e7f8ed;
+            border: 6px solid #20a05a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: successPop 0.5s ease-out;
+        }
+
+        .success-check {
+            color: #20a05a;
+            font-size: 65px;
+            font-weight: bold;
+            animation: checkAppear 0.5s 0.2s ease-out both;
+        }
+
+        @keyframes successPop {
+
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+        }
+
+        @keyframes checkAppear {
+
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+        }
+
+        .success-title {
+            margin-top: 25px;
+            color: #16803a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .success-subtitle {
+            margin-top: 8px;
+            color: #666;
+            font-size: 15px;
+        }
+
+
         /* ================= RESPONSIVE ================= */
 
         @media (max-width: 900px) {
@@ -226,6 +439,22 @@
 
             .login-box h1 {
                 font-size: 28px;
+            }
+
+            .medical-loader,
+            .success-circle {
+                width: 100px;
+                height: 100px;
+            }
+
+            .medical-loader::before {
+                width: 50px;
+                height: 50px;
+                font-size: 27px;
+            }
+
+            .success-check {
+                font-size: 55px;
             }
 
         }
@@ -283,7 +512,7 @@
     </nav>
 
 
-    <!-- ================= LOGIN ================= -->
+    <!-- ================= LOGIN SECTION ================= -->
 
     <section class="login-section">
 
@@ -354,6 +583,7 @@
                 <button
                     type="submit"
                     class="login-btn"
+                    id="loginButton"
                 >
 
                     🔐 Login
@@ -376,6 +606,58 @@
         </div>
 
     </section>
+
+
+    <!-- ================= LOGIN ANIMATION ================= -->
+
+    <div
+        class="login-overlay"
+        id="loginOverlay"
+    >
+
+        <!-- LOADING ANIMATION -->
+
+        <div id="loadingAnimation">
+
+            <div class="medical-loader"></div>
+
+            <div class="loading-title">
+                Signing you in<span class="loading-dots"></span>
+            </div>
+
+            <div class="loading-subtitle">
+                Please wait while we verify your account
+            </div>
+
+        </div>
+
+
+        <!-- SUCCESS ANIMATION -->
+
+        <div
+            class="success-animation"
+            id="successAnimation"
+        >
+
+            <div class="success-circle">
+
+                <div class="success-check">
+                    ✓
+                </div>
+
+            </div>
+
+            <div class="success-title">
+                Login Successful!
+            </div>
+
+            <div class="success-subtitle">
+                Welcome to MediCare Hospital
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- ================= FOOTER ================= -->
@@ -407,6 +689,18 @@
         const loginMessage =
             document.getElementById("loginMessage");
 
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const loginOverlay =
+            document.getElementById("loginOverlay");
+
+        const loadingAnimation =
+            document.getElementById("loadingAnimation");
+
+        const successAnimation =
+            document.getElementById("successAnimation");
+
 
         loginForm.addEventListener(
             "submit",
@@ -425,6 +719,22 @@
                     document
                         .getElementById("password")
                         .value;
+
+
+                /* ===============================
+                   SHOW LOGIN ANIMATION
+                =============================== */
+
+                loginButton.disabled = true;
+
+                loginButton.innerHTML =
+                    "⏳ Signing in...";
+
+                loginOverlay.classList.add("show");
+
+                loadingAnimation.style.display = "block";
+
+                successAnimation.classList.remove("show");
 
 
                 try {
@@ -457,13 +767,11 @@
                         await response.json();
 
 
+                    /* ===============================
+                       SUCCESSFUL LOGIN
+                    =============================== */
+
                     if (response.ok) {
-
-                        loginMessage.textContent =
-                            "✅ Login successful!";
-
-                        loginMessage.style.display =
-                            "block";
 
 
                         /* Save patient information */
@@ -476,7 +784,20 @@
                         );
 
 
-                        /* Open patient dashboard */
+                        /* Hide loading */
+
+                        loadingAnimation.style.display =
+                            "none";
+
+
+                        /* Show success animation */
+
+                        successAnimation.classList.add(
+                            "show"
+                        );
+
+
+                        /* Redirect to dashboard */
 
                         setTimeout(
                             function() {
@@ -485,11 +806,27 @@
                                     "patient-dashboard.html";
 
                             },
-                            1000
+                            1800
                         );
 
 
-                    } else {
+                    }
+
+                    /* ===============================
+                       LOGIN FAILED
+                    =============================== */
+
+                    else {
+
+                        loginOverlay.classList.remove(
+                            "show"
+                        );
+
+                        loginButton.disabled = false;
+
+                        loginButton.innerHTML =
+                            "🔐 Login";
+
 
                         alert(
                             data.message ||
@@ -499,12 +836,29 @@
                     }
 
 
-                } catch (error) {
+                }
+
+                /* ===============================
+                   BACKEND ERROR
+                =============================== */
+
+                catch (error) {
 
                     console.log(
                         "Login Error:",
                         error
                     );
+
+
+                    loginOverlay.classList.remove(
+                        "show"
+                    );
+
+                    loginButton.disabled = false;
+
+                    loginButton.innerHTML =
+                        "🔐 Login";
+
 
                     alert(
                         "Backend server se connection nahi ho raha hai."
@@ -513,6 +867,7 @@
                 }
 
             }
+
         );
 
     </script>

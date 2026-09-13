@@ -254,6 +254,26 @@
         background: #fde2e2;
         color: #b42318;
     }
+    .payment-paid {
+    background: #dff6e7;
+    color: #16743a;
+}
+
+.payment-unpaid {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.payment-id {
+    font-size: 12px;
+    color: #555;
+    word-break: break-all;
+}
+
+.payment-amount {
+    font-weight: bold;
+    color: #075e6e;
+}
 
     /* ================= ACTION BUTTONS ================= */
 
@@ -666,13 +686,25 @@
                         Time
                     </th>
 
-                    <th>
-                        Status
-                    </th>
+<th>
+    Status
+</th>
 
-                    <th>
-                        Action
-                    </th>
+<th>
+    Payment Status
+</th>
+
+<th>
+    Payment ID
+</th>
+
+<th>
+    Amount
+</th>
+
+<th>
+    Action
+</th>
 
                 </tr>
 
@@ -683,7 +715,7 @@
                 <tr>
 
                     <td
-                        colspan="8"
+                        colspan="11"
                         class="empty-message">
 
                         Loading appointments...
@@ -928,7 +960,7 @@ async function loadDoctorAppointments() {
                 <tr>
 
                     <td
-                        colspan="8"
+                        colspan="11"
                         class="empty-message">
 
                         📅 No patient appointments found.
@@ -961,6 +993,20 @@ async function loadDoctorAppointments() {
                 const status =
                     appointment.status ||
                     "Pending";
+                    const paymentStatus =
+    appointment.paymentStatus || "Pending";
+
+const paymentId =
+    appointment.paymentId || "-";
+
+const paymentAmount =
+    appointment.paymentAmount || 0;
+
+let paymentClass = "payment-unpaid";
+
+if (paymentStatus === "Paid") {
+    paymentClass = "payment-paid";
+}
 
 
                 let statusClass =
@@ -1123,6 +1169,23 @@ else if (status === "Confirmed") {
                     </td>
 
                     <td>
+    <span class="status-badge ${paymentClass}">
+        ${paymentStatus === "Paid" ? "💳 Paid" : "⏳ " + paymentStatus}
+    </span>
+</td>
+
+<td>
+    <span class="payment-id">
+        ${paymentId}
+    </span>
+</td>
+
+<td>
+    <span class="payment-amount">
+        ₹${paymentAmount}
+    </span>
+</td>
+                    <td>
 
                         ${actionHTML}
 
@@ -1151,7 +1214,7 @@ else if (status === "Confirmed") {
             <tr>
 
                 <td
-                    colspan="8"
+                    colspan="11"
                     class="empty-message"
                     style="color:#dc3545;">
 
